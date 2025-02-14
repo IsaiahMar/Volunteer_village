@@ -18,3 +18,4 @@ class TeacherController extends Controller
         return view('teacher.home', compact('verifications', 'hoursLogged'));
     }
 }
+
