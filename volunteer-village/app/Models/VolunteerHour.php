@@ -9,7 +9,7 @@ class VolunteerHour extends Model
 {
     use HasFactory;
 
-    // Specify the table associated with the model (optional if it follows Laravel's naming convention)
+    // Specify the table associated with the model
     protected $table = 'volunteer_hours';
 
     // Specify the primary key of the table (optional if it follows Laravel's naming convention)
