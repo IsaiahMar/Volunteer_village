@@ -2,6 +2,7 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
+    display: flex;
 }
 
 .navbar {
@@ -44,4 +45,56 @@ ul li:nth-child(odd) {
 
 .dropdown-menu .dropdown-item.disabled {
     color: #6c757d;
+}
+
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+}
+
+.sidebar .logo {
+    width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.sidebar h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.sidebar .nav-item {
+    margin-bottom: 10px;
+}
+
+.sidebar .nav-link {
+    color: #343a40;
+    font-size: 18px;
+    padding: 10px;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #e9ecef;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.sidebar .nav-link:hover:not(.disabled) {
+    background-color: #d6d8db;
+}
+
+.content {
+    margin-left: 270px;
+    padding: 20px;
+    height: 100vh;
+    overflow-y: auto;
 }
