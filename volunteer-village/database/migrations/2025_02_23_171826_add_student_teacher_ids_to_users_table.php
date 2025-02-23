@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('organizations', function (Blueprint $table) {
-            $table->increments('org_id');
-            $table->string('org_name');
-            $table->string('org_pass');
-            $table->string('org_type');
-            $table->string('contact_info');
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->bigInteger('student_id')->nullable()->unique();
+            $table->bigInteger('teacher_id')->nullable()->unique();
         });
     }
 
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('organizations');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn(['student_id', 'teacher_id']);
+        });
     }
 };

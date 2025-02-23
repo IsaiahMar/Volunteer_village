@@ -30,14 +30,45 @@
                 </div>
             @endif
         </div>
+        <div class="container">
+        <!-- Login Form -->
+        <div class="form-box">
+            <h2>Login</h2>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <button type="submit">Login</button>
+            </form>
+        </div>
 
-        <!-- <div class="">
-            <div class="">
-                <div class="mainlogo">
-                    <img src="{{ asset('images/medical_logo.png') }}" alt="Medical Logo">
-                </div>
-            </div>
-        </div> -->
+        <!-- Register Form -->
+        <div class="form-box">
+            <h2>Register</h2>
+            <form action="{{ route('register') }}" method="POST">
+                @csrf
+                <label>Name</label>
+                <input type="text" name="name" required>
+                
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <label>Confirm Password</label>
+                <input type="password" name="password_confirmation" required>
+                
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+                        
+        
 
     </body>
 </html>
