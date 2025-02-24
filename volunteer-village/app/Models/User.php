@@ -21,8 +21,23 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'student_id',
+        'teacher_id'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if ($user->role === 'student') {
+                $user->student_id = User::whereNotNull('student_id')->max('student_id') + 1 ?? 1000;
+            } elseif ($user->role === 'teacher') {
+                $user->teacher_id = User::whereNotNull('teacher_id')->max('teacher_id') + 1 ?? 5000;
+            }
+        });
+    }
     /**
      * The attributes that should be hidden for serialization.
      *
