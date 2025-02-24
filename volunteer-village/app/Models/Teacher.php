@@ -11,10 +11,12 @@ class Teacher extends Model
     use HasFactory;
 
     // Specify the table associated with the model (optional if it follows Laravel's naming convention)
-    protected $table = 'teachers';
+    protected $table = 'teacher';
 
     // Specify the primary key of the table (optional if it follows Laravel's naming convention)
     protected $primaryKey = 'Teacher_ID';
+    public $incrementing = true; // Ensure auto-incrementing
+    protected $keyType = 'int'; // Ensure the key type is integer
 
     // Specify the attributes that are mass assignable
     protected $fillable = [
