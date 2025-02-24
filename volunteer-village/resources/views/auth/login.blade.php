@@ -44,6 +44,7 @@
             </x-primary-button>
         </div>
     </form>
+
     <a href="{{ route('register') }}">
         <button type="button">Go to Register</button>
     </a>
