@@ -17,4 +17,17 @@ class TeacherController extends Controller
 
         return view('teacher.home', compact('verifications', 'hoursLogged'));
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'Teacher_name' => 'required|string|max:255',
+        ]);
+
+        Teacher::create([
+            'Teacher_name' => $request->Teacher_name,
+        ]);
+
+        return redirect()->route('teachers.index')->with('success', 'Teacher created successfully.');
+    }
 }
