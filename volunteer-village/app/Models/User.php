@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +20,23 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'student_id',
+        'teacher_id'
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($user) {
+            if ($user->role === 'student') {
+                $user->student_id = User::whereNotNull('student_id')->max('student_id') + 1 ?? 1000;
+            } elseif ($user->role === 'teacher') {
+                $user->teacher_id = User::whereNotNull('teacher_id')->max('teacher_id') + 1 ?? 5000;
+            }
+        });
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -41,4 +56,34 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return $this->is_admin;
+    }
+
+    /**
+     * Check if the user is a teacher.
+     *
+     * @return bool
+     */
+    public function isTeacher()
+    {
+        return $this->role === 'teacher'; 
+    }
+
+    /**
+     * Check if the user is an organization.
+     *
+     * @return bool
+     */
+    public function isOrganization()
+    {
+        return $this->role === 'organization'; 
+    }
 }
