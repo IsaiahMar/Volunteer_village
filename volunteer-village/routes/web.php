@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\OrganizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
+//start of organization routes
+Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
+Route::get('/organization/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('organization.createOpportunity');
+Route::post('/organization/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('organization.storeOpportunity');
+//end of organization routes
 
+//teacher routes
+Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
+//end of teacher routes
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
