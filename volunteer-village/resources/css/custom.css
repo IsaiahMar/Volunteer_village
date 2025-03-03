@@ -1,0 +1,102 @@
+.profile-section, .password-section, .delete-section {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.profile-header, .password-header, .delete-header {
+    margin-bottom: 15px;
+}
+
+.profile-title, .password-title, .delete-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.profile-description, .password-description, .delete-description {
+    font-size: 1rem;
+    color: #666;
+}
+
+.profile-form, .password-form, .delete-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.form-error {
+    color: #e74c3c;
+    font-size: 0.875rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form-success {
+    color: #27ae60;
+    font-size: 0.875rem;
+}
+
+.verification-section {
+    margin-top: 10px;
+}
+
+.verification-text {
+    font-size: 0.875rem;
+    color: #333;
+}
+
+.verification-button {
+    color: #3498db;
+    cursor: pointer;
+}
+
+.verification-success {
+    color: #27ae60;
+    font-size: 0.875rem;
+}
+
+.delete-button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-confirm-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.delete-confirm-description {
+    font-size: 1rem;
+    color: #666;
+}
+
+.delete-confirm-button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
