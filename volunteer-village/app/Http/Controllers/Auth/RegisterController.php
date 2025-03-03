@@ -12,40 +12,66 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
-
-    protected $redirectTo = '/home';
-
-    public function __construct()
+    public function showRegistrationForm()
     {
-        $this->middleware('guest');
+        return view('auth.register');
     }
 
-    protected function validator(array $data)
+    
+    public function register(Request $request)
     {
-        return Validator::make($data, [
+        $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role' => ['required', 'string'],
         ]);
-    }
 
-    protected function create(array $data)
-    {
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => $data['role'],
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
 
-        if ($data['role'] === 'teacher') {
-            Teacher::create([
-                'Teacher_name' => $user->name,
-            ]);
+        Auth::login($user);
+
+        return redirect()->route('dashboard');
+    }
+
+    /**
+     * Show the login form.
+     */
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->route('dashboard');
         }
 
-        return $user;
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

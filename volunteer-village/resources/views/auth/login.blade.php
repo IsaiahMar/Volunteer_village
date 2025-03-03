@@ -1,7 +1,20 @@
 <x-guest-layout>
-    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-
+    <div class="navbar">
+            @if (Route::has('login'))
+                <div class="navbar_items">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="word">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="word">Log in</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="word">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+        </div>
+    <br><br><br><br><br><br>
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
