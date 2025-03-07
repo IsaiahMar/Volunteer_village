@@ -5,68 +5,71 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Volunteer Village</title>
+        <title>Volunteer VIllage</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('CSS/login.css') }}">
+        <link rel="stylesheet" href="{{ asset('CSS/app.css') }}">
+
+
     </head>
     <body>
+        <div class="navbar">
+            @if (Route::has('login'))
+                <div class="navbar_items">
+                    @auth
+                        <a href="{{ url('/dashboard') }}" class="word">Dashboard</a>
+                    @else
+                        <a href="{{ route('login') }}" class="word">Log in</a>
+                        @if (Route::has('register'))
+                            <a href="{{ route('register') }}" class="word">Register</a>
+                        @endif
+                    @endauth
+                </div>
+            @endif
+        </div>
         <div class="container">
-            <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
-            <h1 class="header">Welcome to Volunteer Village</h1>
-            <div class="form-box">
-                <h2>Login</h2>
-                <form action="{{ route('login') }}" method="POST">
-                    @csrf
-                    <label>Email</label>
-                    <input type="email" name="email" required>
-                    
-                    <label>Password</label>
-                    <input type="password" name="password" required>
-                    
-                    <button type="submit">Login</button>
-                </form>
-            </div>
-
-            <button id="toggleRegisterForm">New here? Click to register</button>
-
-            <div class="form-box" id="registerForm" style="display: none;">
-                <h2>Register</h2>
-                <form action="{{ route('register') }}" method="POST">
-                    @csrf
-                    <label>Name</label>
-                    <input type="text" name="name" required>
-                    
-                    <label>Email</label>
-                    <input type="email" name="email" required>
-                    
-                    <label>Password</label>
-                    <input type="password" name="password" required>
-                    
-                    <label>Confirm Password</label>
-                    <input type="password" name="password_confirmation" required>
-                    
-                    <button type="submit">Register</button>
-                </form>
-            </div>
+        <!-- Login Form -->
+        <div class="form-box">
+            <h2>Login</h2>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <button type="submit">Login</button>
+            </form>
         </div>
 
-        <script>
-            document.getElementById('toggleRegisterForm').addEventListener('click', function() {
-                var registerForm = document.getElementById('registerForm');
-                if (registerForm.style.display === 'none') {
-                    registerForm.style.display = 'block';
-                } else {
-                    registerForm.style.display = 'none';
-                }
-            });
-        </script>
+        <!-- Register Form -->
+        <div class="form-box">
+            <h2>Register</h2>
+            <form action="{{ route('register') }}" method="POST">
+                @csrf
+                <label>Name</label>
+                <input type="text" name="name" required>
+                
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <label>Confirm Password</label>
+                <input type="password" name="password_confirmation" required>
+                
+                <button type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+                        
+        
+
     </body>
 </html>
-
-
-

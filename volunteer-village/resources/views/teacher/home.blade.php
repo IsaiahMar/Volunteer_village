@@ -17,13 +17,13 @@
                     <a class="nav-link" href="{{ route('teacher.home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
+                    <a class="nav-link" href="#">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST">
+                    {{-- <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button class="nav-link btn btn-link" type="submit">Logout</button>
-                    </form>
+                    </form> --}}
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
