@@ -3,10 +3,12 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\OrganizationController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +38,7 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
@@ -50,3 +53,6 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+Route::get('/student-home', function () {
+    return view('StudentHome'); // No subfolder needed
+});

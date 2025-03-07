@@ -1,4 +1,4 @@
-<!-- filepath: c:\Users\kisha\OneDrive\Desktop\CapStone\Volunteer_village\volunteer-village\resources\views\welcome.blade.php -->
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -67,3 +67,6 @@
         </script>
     </body>
 </html>
+
+
+
