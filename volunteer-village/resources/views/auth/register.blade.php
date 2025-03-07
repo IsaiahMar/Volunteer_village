@@ -1,8 +1,7 @@
+<link rel="stylesheet" href="{{ asset('CSS/app.css') }}">
 <x-guest-layout>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-
     <div class="navbar">
-        @if (Route::has('login'))
+        @if (Route::has('register'))
             <div class="navbar_items">
                 @auth
                     <a href="{{ url('/dashboard') }}" class="word">Dashboard</a>
@@ -53,7 +52,7 @@
                     <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600">Register Now</button>
                 </div>
                 <div class="mt-4 text-center">
-                    <p class="text-gray-600 text-sm">Already have an account? <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Login now</a></p>
+                    <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Login now</a>
                 </div>
             </form>
         </div>

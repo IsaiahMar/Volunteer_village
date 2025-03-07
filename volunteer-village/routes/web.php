@@ -2,6 +2,8 @@
 
 
 use App\Http\Controllers\ProfileController;
+
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
@@ -39,8 +41,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
+Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthenticatedSessionController::class, 'login']);
+Route::get('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
+
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
