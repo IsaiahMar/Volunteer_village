@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organization Home</title>
+    <title>Teacher Home</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -14,19 +14,16 @@
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('organization.home') }}">Home</a>
+                    <a class="nav-link" href="{{ route('student.home') }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
-                </li>
-                <li class="nav-item">
-                    <form action="{{ route('logout') }}" method="POST">
+                    {{-- <form action="{{ route('logout') }}" method="POST">
                         @csrf
                         <button class="nav-link btn btn-link" type="submit">Logout</button>
-                    </form>
+                    </form> --}}
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
@@ -38,15 +35,15 @@
                     <a class="nav-link" href="#">Personal Messaging</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">View Feedback from Students</a>
+                    <a class="nav-link" href="#">View Feedback from teachers</a>
                 </li>
             </ul>
         </div>
         <div class="content p-4">
-            <h1>Welcome, Organization</h1>
+            <h1>Welcome, Teacher</h1>
 
             <h2>Pending Verifications</h2>
-            {{-- <ul>
+            <ul>
                 @foreach($verifications as $verification)
                     <li>
                         Verification ID: {{ $verification->Verification_id }},
@@ -69,7 +66,7 @@
                 @endforeach
             </ul>
         </div>
-    </div> --}}
+    </div>
 
     <!-- Add Bootstrap JS and dependencies -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
