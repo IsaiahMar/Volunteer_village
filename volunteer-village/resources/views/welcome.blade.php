@@ -14,7 +14,7 @@
     <style>
         body {
             font-family: 'Figtree', sans-serif;
-            background-color: #f8f9fa;
+            background-color: blue;
         }
         .hero {
             background: url('{{ asset('images/hero-bg.jpg') }}') no-repeat center center/cover;
