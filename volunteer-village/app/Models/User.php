@@ -86,4 +86,9 @@ class User extends Authenticatable
     {
         return $this->role === 'organization'; 
     }
+
+    public function volunteerHours()
+    {
+        return $this->hasMany(VolunteerHour::class, 'Student_ID', 'student_id');
+    }
 }
