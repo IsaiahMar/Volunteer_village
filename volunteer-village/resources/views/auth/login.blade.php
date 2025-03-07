@@ -1,5 +1,8 @@
 <x-guest-layout>
     <x-auth-session-status class="mb-4" :status="session('status')" />
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+
     <div class="navbar">
             @if (Route::has('login'))
                 <div class="navbar_items">

@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('student', function (Blueprint $table) {
-            $table->increments('student_id');
-            $table->string('student_name');
-            $table->string('student_pass');
-            $table->string('email')->unique();
-            $table->string('phone_number')->unique();
-            $table->string('grade_level');
+        Schema::create('verified_hours', function (Blueprint $table) {
+            $table->id();
             $table->timestamps();
         });
     }
@@ -27,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('student');
+        Schema::dropIfExists('verified_hours');
     }
 };
