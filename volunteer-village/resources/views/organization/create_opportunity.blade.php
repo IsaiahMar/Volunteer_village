@@ -68,5 +68,8 @@
             <button type="submit" class="btn btn-primary">Create</button>
         </form>
     </div>
+    <footer class="bg-light text-center py-3 mt-auto">
+        <p>&copy; 2025 Volunteer Village. All rights reserved.</p>
+    </footer>
 </body>
 </html>
