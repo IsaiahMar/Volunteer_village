@@ -1,5 +1,7 @@
 
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,12 +11,14 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     
-    <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
     <style>
         body {
             font-family: 'Figtree', sans-serif;
-            background-color: #f8f9fa;
+            background-color: blue;
         }
         .hero {
             background: url('{{ asset('images/hero-bg.jpg') }}') no-repeat center center/cover;
@@ -56,7 +60,9 @@
         }
     </style>
 </head>
+
 <body>
+    <!-- Navbar -->
     <div class="navbar">
         @if (Route::has('login'))
             <div class="navbar_items">
@@ -71,29 +77,59 @@
             </div>
         @endif
     </div>
-    
-    <div class="hero">
-        <h1>Welcome to Volunteer Village</h1>
-        <p>Connecting volunteers with opportunities to make a difference.</p>
-        <a href="{{ route('register') }}" class="btn-primary">Get Started</a>
+
+    <!-- Authentication Forms -->
+    <div class="container">
+        <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
+        <h1 class="header">Welcome to Volunteer Village</h1>
+        
+        <div class="form-box">
+            <h2>Login</h2>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <button id="toggleRegisterForm">New here? Click to register</button>
+
+        <div class="form-box" id="registerForm" style="display: none;">
+            <h2>Register</h2>
+            <form action="{{ route('register') }}" method="POST">
+                @csrf
+                <label>Name</label>
+                <input type="text" name="name" required>
+                
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <label>Confirm Password</label>
+                <input type="password" name="password_confirmation" required>
+                
+                <button type="submit">Register</button>
+            </form>
+        </div>
     </div>
-    
-    <div class="features">
-        <div class="feature-box">
-            <img src="{{ asset('images/icon1.png') }}" alt="Icon">
-            <h3>Course Management</h3>
-            <p>Organize and manage volunteer training programs easily.</p>
-        </div>
-        <div class="feature-box">
-            <img src="{{ asset('images/icon2.png') }}" alt="Icon">
-            <h3>Communication Hub</h3>
-            <p>Stay connected with volunteers and organizations.</p>
-        </div>
-        <div class="feature-box">
-            <img src="{{ asset('images/icon3.png') }}" alt="Icon">
-            <h3>Engagement Platform</h3>
-            <p>Find and participate in meaningful volunteer work.</p>
-        </div>
-    </div>
+
+    <!-- Script for Toggle Register Form -->
+    <script>
+        document.getElementById('toggleRegisterForm').addEventListener('click', function() {
+            var registerForm = document.getElementById('registerForm');
+            registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
+        });
+    </script>
 </body>
 </html>
+
+
+
+

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Home</title>
+    <title>Profile</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -40,31 +40,38 @@
             </ul>
         </div>
         <div class="content p-4">
-            <h1>Welcome, Teacher</h1>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Profile') }}
+            </h2>
 
-            <h2>Pending Verifications</h2>
-            <ul>
-                @foreach($verifications as $verification)
-                    <li>
-                        Verification ID: {{ $verification->Verification_id }},
-                        Student ID: {{ $verification->Student_ID }},
-                        Hours ID: {{ $verification->Hours_ID }},
-                        Status: {{ $verification->Status }}
-                    </li>
-                @endforeach
-            </ul>
+            <div class="py-12">
+                <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
+                    <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
+                        <h3 class="text-lg font-medium text-gray-900">Name: {{ $user->name }}</h3>
+                        <h3 class="text-lg font-medium text-gray-900">Email: {{ $user->email }}</h3>
+                        <h3 class="text-lg font-medium text-gray-900">Role: {{ $user->role }}</h3>
+                        <h3 class="text-lg font-medium text-gray-900">Total Volunteer Hours: {{ $totalHours }}</h3>
+                    </div>
 
-            <h2>Volunteer Hours Logged</h2>
-            <ul>
-                @foreach($hoursLogged as $hours)
-                    <li>
-                        Hours ID: {{ $hours->Hours_ID }},
-                        Hours Logged: {{ $hours->Hours_Logged }},
-                        Date Logged: {{ $hours->Date_logged }},
-                        Verified: {{ $hours->Verified ? 'Yes' : 'No' }}
-                    </li>
-                @endforeach
-            </ul>
+                    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="max-w-xl">
+                            @include('profile.partials.update-profile-information-form')
+                        </div>
+                    </div>
+
+                    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="max-w-xl">
+                            @include('profile.partials.update-password-form')
+                        </div>
+                    </div>
+
+                    <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="max-w-xl">
+                            @include('profile.partials.delete-user-form')
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

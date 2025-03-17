@@ -1,5 +1,8 @@
 <x-guest-layout>
     <x-auth-session-status class="mb-4" :status="session('status')" />
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+
+
     <div class="navbar">
             @if (Route::has('login'))
                 <div class="navbar_items">
@@ -53,12 +56,10 @@
             @endif
 
             <x-primary-button class="ms-3">
-                {{ __('Log in') }}
+                Login
             </x-primary-button>
         </div>
     </form>
 
-    <a href="{{ route('register') }}">
-        <button type="button">Go to Register</button>
-    </a>
+   
 </x-guest-layout>
