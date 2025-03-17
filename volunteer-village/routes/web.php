@@ -22,6 +22,7 @@ use App\Http\Controllers\OrganizationController;
 |
 */
 
+
 Route::get('/', function () {
     return '<h1>Laravel is working!</h1>'; 
 });
@@ -29,6 +30,7 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return 'Laravel is working!';
 });
+
 
 //start of organization routes
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
@@ -63,3 +65,12 @@ require __DIR__.'/auth.php';
 Route::get('/student-home', function () {
     return view('StudentHome'); // No subfolder needed
 });
+
+
+Route::get('/home', [StudentController::class, 'home'])->name('home');
+Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
+Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
+Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
+Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
+Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
+Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
