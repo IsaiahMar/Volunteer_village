@@ -23,12 +23,12 @@
         <div class="content">
             <h1>Impact Stream</h1>
             <div class="impact-stream">
-                @foreach($verifiedHours as $hour)
+                <!-- @foreach($verifiedHours as $hour)
                     <div class="post-box">
                         <h3>{{ $hour->caption }}</h3>
                         <img src="{{ asset('storage/' . $hour->image_path) }}" alt="Service Image">
                     </div>
-                @endforeach
+                @endforeach -->
             </div>
         
         </div>
