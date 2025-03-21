@@ -9,26 +9,26 @@
 <body>
     <div class="container">
         <div class="sidebar">
-            <a href="{{ route('home') }}">Home</a>
-            <a href="{{ route('profile') }}">Profile</a>
-            <form method="POST" action="{{ route('logout') }}">
+            <a href="{{ route('student.home') }}">Home</a>
+            <a href="{{ route('student.profile') }}">Profile</a>
+            <form method="POST" action="{{ route('student.logout') }}">
                 @csrf
                 <button type="submit">Logout</button>
             </form>
-            <a href="{{ route('submit.hours') }}">Submit Service Hours</a>
-            <a href="{{ route('your.hours') }}">Your Hours/Awards</a>
-            <a href="{{ route('messaging') }}">Personal Messaging</a>
-            <a href="{{ route('opportunity.board') }}">Opportunity Board</a>
+            <a href="{{ route('student.submit.hours') }}">Submit Service Hours</a>
+            <a href="{{ route('student.your.hours') }}">Your Hours/Awards</a>
+            <a href="{{ route('student.messaging') }}">Personal Messaging</a>
+            <a href="{{ route('student.opportunity.board') }}">Opportunity Board</a>
         </div>
         <div class="content">
             <h1>Impact Stream</h1>
             <div class="impact-stream">
-                <!-- @foreach($verifiedHours as $hour)
+                @foreach($verifiedHours as $hour)
                     <div class="post-box">
                         <h3>{{ $hour->caption }}</h3>
                         <img src="{{ asset('storage/' . $hour->image_path) }}" alt="Service Image">
                     </div>
-                @endforeach -->
+                @endforeach
             </div>
         
         </div>

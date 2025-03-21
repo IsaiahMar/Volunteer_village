@@ -7,8 +7,8 @@ class StudentController extends Controller
 {
     public function home()
 {
-    $verifiedHours = []; // Fetch verified hours from the database
-    return view('StudentHome', compact('verifiedHours'));
+    // // $verifiedHours = []; // Fetch verified hours from the database
+    // return view('StudentHome', compact('verifiedHours'));
 }
 
 public function profile()
