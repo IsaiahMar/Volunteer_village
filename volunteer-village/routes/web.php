@@ -67,7 +67,7 @@ Route::get('/student-home', function () {
 });
 
 
-Route::get('/home', [StudentController::class, 'home'])->name('home');
+Route::get('/student-home', [StudentController::class, 'home'])->name('home');
 Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
 Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
 Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
