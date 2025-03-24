@@ -3,6 +3,9 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
     display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
 }
 
 .navbar {
@@ -95,7 +98,7 @@ ul li:nth-child(odd) {
 .content {
     margin-left: 270px;
     padding: 20px;
-    height: 100vh;
+    flex: 1;
     overflow-y: auto;
 }
 
@@ -114,4 +117,15 @@ button:hover {
 
 button.btn-link:hover {
     text-decoration: underline;
+}
+
+/* Ensure the footer stays at the bottom */
+footer {
+    flex-shrink: 0;
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }
