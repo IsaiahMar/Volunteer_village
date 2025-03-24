@@ -22,9 +22,11 @@ use App\Http\Controllers\OrganizationController;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 
 //start of organization routes
@@ -60,3 +62,12 @@ require __DIR__.'/auth.php';
 Route::get('/student-home', function () {
     return view('StudentHome'); // No subfolder needed
 });
+
+
+Route::get('/student-home', [StudentController::class, 'home'])->name('home');
+Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
+Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
+Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
+Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
+Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
+Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
