@@ -24,12 +24,9 @@ use App\Http\Controllers\OrganizationController;
 
 
 Route::get('/', function () {
-    return '<h1>Laravel is working!</h1>'; 
+    return view('welcome');
 });
 
-Route::get('/test', function () {
-    return 'Laravel is working!';
-});
 
 
 //start of organization routes
