@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
@@ -12,16 +11,6 @@ use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile.
-     */
-    public function show(): View
-    {
-        $user = Auth::user();
-        $totalHours = 0;
-        return view('profile.profile', compact('user', 'totalHours'));
-    }
-
     /**
      * Display the user's profile form.
      */
