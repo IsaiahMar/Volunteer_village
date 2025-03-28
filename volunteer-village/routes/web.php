@@ -10,6 +10,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\LeaderboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,5 @@ Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('su
 Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
 Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
 Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
+
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');

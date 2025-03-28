@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Home</title>
+    <title>Leaderboard</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -35,34 +35,47 @@
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('leaderboard') }}">Leaderboard</a>
+                    <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
             </ul>
         </div>
         <div class="content p-4">
-            <h1>Welcome, Teacher</h1>
-
-            {{-- <h2>Pending Verifications</h2>
-            <ul>
-                @foreach($verifications as $verification)
-                    <li>
-                        Verification ID: {{ $verification->Verification_id }},
-                        Student ID: {{ $verification->Student_ID }},
-                        Hours ID: {{ $verification->Hours_ID }},
-                        Status: {{ $verification->Status }}
-                    </li>
-                @endforeach --}}
-            </ul>
+            <h1>Leaderboard</h1>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Total Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($leaderboard as $index => $student)
+                        <tr>
+                            <td>
+                                @if($index == 0)
+                                    ♔
+                                @elseif($index == 1)
+                                    ♕
+                                @elseif($index == 2)
+                                    ♖
+                                @else
+                                    {{ $index + 1 }}
+                                @endif
+                            </td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->total_hours }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
-
-
-    <!-- Add Bootstrap JS and dependencies -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <footer class="bg-light text-center py-3 mt-auto">
         <p>&copy; 2025 Volunteer Village. All rights reserved.</p>
     </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
