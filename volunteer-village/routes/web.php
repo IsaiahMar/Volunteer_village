@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OpportunityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\LoginController;
@@ -26,9 +27,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/view_opportunities', function () {
-    return view('view_opportunities');
-});
+Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
 
 //start of organization routes

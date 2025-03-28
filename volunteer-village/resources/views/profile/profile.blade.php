@@ -6,6 +6,32 @@
     <title>Profile</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Inline CSS for blue text, green buttons, and dark gray background */
+        .profile-content {
+            background-color: #333; /* Dark gray background */
+            color: white; /* White text for better contrast */
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .profile-content h3 {
+            color: lightblue; /* Light blue text for headings */
+        }
+
+        .profile-content button {
+            background-color: green;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .profile-content button:hover {
+            background-color: darkgreen;
+        }
+    </style>
 </head>
 <body>
     <div class="d-flex">
@@ -17,13 +43,7 @@
                     <a class="nav-link" href="{{ route('teacher.home') }}">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
-                </li>
-                <li class="nav-item">
-                    {{-- <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button class="nav-link btn btn-link" type="submit">Logout</button>
-                    </form> --}}
+                    <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
@@ -39,7 +59,7 @@
                 </li>
             </ul>
         </div>
-        <div class="content p-4">
+        <div class="content p-4 profile-content">
             <x-app-layout>
                 <x-slot name="header">
                     <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -49,28 +69,30 @@
 
                 <div class="py-12">
                     <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                        <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg p-6">
-                            <h3 class="text-lg font-medium text-gray-900">Name: {{ $user->name }}</h3>
-                            <h3 class="text-lg font-medium text-gray-900">Email: {{ $user->email }}</h3>
-                            <h3 class="text-lg font-medium text-gray-900">Role: {{ $user->role }}</h3>
-                            {{-- <h3 class="text-lg font-medium text-gray-900">Total Volunteer Hours: {{ $totalHours }}</h3> --}}
+                        <div class="bg-dark overflow-hidden shadow-xl sm:rounded-lg p-6">
+                            <h3 class="text-lg font-medium">Name: {{ $user->name }}</h3>
+                            <h3 class="text-lg font-medium">Email: {{ $user->email }}</h3>
+                            <h3 class="text-lg font-medium">Role: {{ $user->role }}</h3>
                         </div>
 
-                        <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="p-4 sm:p-8 bg-dark shadow sm:rounded-lg">
                             <div class="max-w-xl">
                                 @include('profile.partials.update-profile-information-form')
+                                <button type="button">Update Profile</button>
                             </div>
                         </div>
 
-                        <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="p-4 sm:p-8 bg-dark shadow sm:rounded-lg">
                             <div class="max-w-xl">
                                 @include('profile.partials.update-password-form')
+                                <button type="button">Update Password</button>
                             </div>
                         </div>
 
-                        <div class="p-4 sm:p-8 bg-white dark:bg-gray-800 shadow sm:rounded-lg">
+                        <div class="p-4 sm:p-8 bg-dark shadow sm:rounded-lg">
                             <div class="max-w-xl">
                                 @include('profile.partials.delete-user-form')
+                                <button type="button">Delete Account</button>
                             </div>
                         </div>
                     </div>
