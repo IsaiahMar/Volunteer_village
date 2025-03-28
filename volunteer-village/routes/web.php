@@ -7,7 +7,7 @@ use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\Auth\AuthenticatedSessionController;
+// use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisterController;
 
 /*
@@ -26,6 +26,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/view_opportunities', function () {
+    return view('view_opportunities');
+});
 
 
 //start of organization routes
@@ -65,7 +68,7 @@ Route::get('/student-home', function () {
 
 
 Route::get('/student-home', [StudentController::class, 'home'])->name('home');
-Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
+// Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
 Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
 Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
 Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');

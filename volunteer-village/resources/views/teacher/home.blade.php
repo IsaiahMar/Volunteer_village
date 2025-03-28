@@ -42,7 +42,7 @@
         <div class="content p-4">
             <h1>Welcome, Teacher</h1>
 
-            <h2>Pending Verifications</h2>
+            {{-- <h2>Pending Verifications</h2>
             <ul>
                 @foreach($verifications as $verification)
                     <li>
@@ -51,19 +51,7 @@
                         Hours ID: {{ $verification->Hours_ID }},
                         Status: {{ $verification->Status }}
                     </li>
-                @endforeach
-            </ul>
-
-            <h2>Volunteer Hours Logged</h2>
-            <ul>
-                @foreach($hoursLogged as $hours)
-                    <li>
-                        Hours ID: {{ $hours->Hours_ID }},
-                        Hours Logged: {{ $hours->Hours_Logged }},
-                        Date Logged: {{ $hours->Date_logged }},
-                        Verified: {{ $hours->Verified ? 'Yes' : 'No' }}
-                    </li>
-                @endforeach
+                @endforeach --}}
             </ul>
         </div>
     </div>

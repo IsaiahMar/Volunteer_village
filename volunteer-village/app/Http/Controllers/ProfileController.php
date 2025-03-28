@@ -57,4 +57,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function show(): View
+    {
+        return view('profile.profile', [
+            'user' => Auth::user(), // Pass the authenticated user to the view
+        ]);
+    }
 }

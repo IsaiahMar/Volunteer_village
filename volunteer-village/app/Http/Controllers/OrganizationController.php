@@ -100,4 +100,10 @@ class OrganizationController extends Controller
     
         return redirect()->route('organization.home')->with('success', 'Volunteer opportunity created successfully.');
     }
+
+    public function viewOpportunities()
+    {
+        $opportunities = VolunteerOpportunity::all();
+        return view('View_oppurtunities', compact('opportunities'));
+    }
 }
