@@ -118,6 +118,7 @@
             </form>
         </div>
     </div>
+    
     <!-- Script for Toggle Register Form -->
     <script>
         document.getElementById('toggleRegisterForm').addEventListener('click', function() {
@@ -127,6 +128,7 @@
     </script>
 </body>
 </html>
+
 
 
 
