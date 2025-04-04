@@ -118,7 +118,7 @@
             </form>
         </div>
     </div>
-    @dd('Welcome page is loading');
+    
     <!-- Script for Toggle Register Form -->
     <script>
         document.getElementById('toggleRegisterForm').addEventListener('click', function() {
@@ -128,6 +128,7 @@
     </script>
 </body>
 </html>
+
 
 
 

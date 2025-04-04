@@ -1,23 +1,7 @@
 <x-guest-layout>
+    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-
-    <div class="navbar">
-            @if (Route::has('login'))
-                <div class="navbar_items">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="word">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="word">Log in</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="word">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-        </div>
-    <br><br><br><br><br><br>
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -60,6 +44,4 @@
             </x-primary-button>
         </div>
     </form>
-
-   
 </x-guest-layout>

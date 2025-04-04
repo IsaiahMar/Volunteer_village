@@ -3,9 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teacher Home</title>
+    <title>Leaderboard</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .leaderboard-table {
+            font-size: 1.2rem;
+            color: darkblue;
+        }
+        .leaderboard-table .chess-piece {
+            font-size: 2rem;
+        }
+        .leaderboard-table .chess-piece.king {
+            color: gold;
+        }
+        .leaderboard-table .chess-piece.queen {
+            color: silver;
+        }
+        .leaderboard-table .chess-piece.rook {
+            color: bronze;
+        }
+    </style>
 </head>
 <body>
     <div class="d-flex">
@@ -37,26 +56,36 @@
             </ul>
         </div>
         <div class="content p-4">
-            <h1>Welcome, Teacher</h1>
-
-            <h2>Pending Verifications</h2>
-            <ul>
-                @foreach($verifications as $verification)
-                    <li>
-                        Verification ID: {{ $verification->Verification_id }},
-                        Student ID: {{ $verification->Student_ID }},
-                        Hours ID: {{ $verification->Hours_ID }},
-                        Status: {{ $verification->Status }}
-                    </li>
-                @endforeach
-            </ul>
-
-            <h3>Your students hours</h3>
-
+            <h1>Leaderboard</h1>
+            <table class="table table-bordered leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Total Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($leaderboard as $index => $student)
+                        <tr>
+                            <td>
+                                @if($index == 0)
+                                    <span class="chess-piece king">♔</span>
+                                @elseif($index == 1)
+                                    <span class="chess-piece queen">♕</span>
+                                @elseif($index == 2)
+                                    <span class="chess-piece rook">♖</span>
+                                @else
+                                    {{ $index + 1 }}
+                                @endif
+                            </td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->total_hours }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
-
-    
-    
     </div>
     <footer class="bg-light text-center py-3 mt-auto">
         <p>&copy; 2025 Volunteer Village. All rights reserved.</p>
