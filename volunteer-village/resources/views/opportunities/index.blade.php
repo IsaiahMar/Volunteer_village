@@ -28,12 +28,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">View Student Hours</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Personal Messaging</a>
-                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link">@livewire('messaging')</a>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li>
@@ -77,5 +74,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/footer.js"></script>
 </body>
 </html>

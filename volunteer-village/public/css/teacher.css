@@ -132,4 +132,11 @@ footer {
     left: 0;
     width: 100%;
     z-index: 1000;
+    transition: height 0.3s ease, padding 0.3s ease;
+}
+
+footer.shrink {
+    height: 30px;
+    padding: 2px 0;
+    font-size: 10px;
 }

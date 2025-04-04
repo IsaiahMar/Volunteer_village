@@ -10,7 +10,7 @@ class Verification extends Model
     use HasFactory;
 
     // Specify the table associated with the model
-    protected $table = 'verification';
+    protected $table = 'verifications';
 
     // Specify the primary key of the table (optional if it follows Laravel's naming convention)
     protected $primaryKey = 'Verification_id';

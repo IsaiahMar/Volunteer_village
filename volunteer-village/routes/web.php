@@ -9,8 +9,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -28,8 +32,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+//view opportunities
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
+
+//messaging routes
+Route::get('/messaging', Messaging::class)->name('messaging');
 
 //start of organization routes
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
@@ -72,7 +80,6 @@ Route::get('/student-home', [StudentController::class, 'home'])->name('home');
 Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
 Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
 Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
-Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
 Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
 
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');

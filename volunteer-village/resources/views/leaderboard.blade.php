@@ -6,6 +6,25 @@
     <title>Leaderboard</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .leaderboard-table {
+            font-size: 1.2rem;
+            color: darkblue;
+        }
+        .leaderboard-table .chess-piece {
+            font-size: 2rem;
+        }
+        .leaderboard-table .chess-piece.king {
+            color: gold;
+        }
+        .leaderboard-table .chess-piece.queen {
+            color: silver;
+        }
+        .leaderboard-table .chess-piece.rook {
+            color: bronze;
+        }
+    </style>
 </head>
 <body>
     <div class="d-flex">
@@ -23,25 +42,22 @@
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">View Student Hours</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Personal Messaging</a>
-                </li>
+                {{-- <li class="nav-item">
+                    <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
             </ul>
         </div>
         <div class="content p-4">
             <h1>Leaderboard</h1>
-            <table class="table table-bordered">
+            <table class="table table-bordered leaderboard-table">
                 <thead>
                     <tr>
                         <th>Rank</th>
@@ -54,11 +70,11 @@
                         <tr>
                             <td>
                                 @if($index == 0)
-                                    ♔
+                                    <span class="chess-piece king">♔</span>
                                 @elseif($index == 1)
-                                    ♕
+                                    <span class="chess-piece queen">♕</span>
                                 @elseif($index == 2)
-                                    ♖
+                                    <span class="chess-piece rook">♖</span>
                                 @else
                                     {{ $index + 1 }}
                                 @endif
@@ -77,5 +93,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="/js/footer.js"></script>
 </body>
 </html>
