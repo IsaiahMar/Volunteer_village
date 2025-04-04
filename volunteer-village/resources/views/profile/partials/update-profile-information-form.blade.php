@@ -13,10 +13,9 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+    <form method="POST" action="{{ route('profile.update') }}">
         @csrf
-        @method('patch')
-
+        @method('PUT')
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
@@ -61,4 +60,21 @@
             @endif
         </div>
     </form>
+    <script>
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.querySelector('input[name="_token"]').value
+                }
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = "{{ route('profile.show') }}"; // Redirect to profile page
+                }
+            });
+        });
+    </script>
 </section>

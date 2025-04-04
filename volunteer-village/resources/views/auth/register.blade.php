@@ -55,6 +55,7 @@
                     <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Login now</a>
                 </div>
             </form>
+
         </div>
-    </div>
+    </form>
 </x-guest-layout>
