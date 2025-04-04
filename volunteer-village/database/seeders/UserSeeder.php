@@ -16,25 +16,21 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Seed teacher
-        DB::table('users')->insert([
-            'name' => 'John Doe',
-            'email' => 'johndoe@example.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('password'), // password
-            'role' => 'teacher',
-            'remember_token' => Str::random(10),
-            'created_at' => now(),
-            'updated_at' => now(),
-            'student_id' => null,
-            'teacher_id' => 1,
-        ]);
-
-        // Seed 10 students
+        // Seed 10 users
         for ($i = 1; $i <= 10; $i++) {
-            DB::table('users')->insert([
-                'name' => "Student $i",
-                'email' => "student$i@example.com",
+            $firstName = "UserFirstName$i";
+            $lastName = "UserLastName$i";
+            $email = "user$i@example.com";
+            $phone = "123-456-789$i";
+            $dateOfBirth = now()->subYears(20)->subDays($i)->toDateString();
+
+            // Insert user into users table
+            $userId = DB::table('users')->insertGetId([
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $email,
+                'phone' => $phone,
+                'dateOfBirth' => $dateOfBirth,
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'), // password
                 'role' => 'student',
@@ -45,10 +41,13 @@ class UserSeeder extends Seeder
                 'teacher_id' => null,
             ]);
 
-            // Seed leaderboard
+            // Insert user into leaderboard table
             DB::table('leaderboard')->insert([
-                'student_id' => $i,
-                'total_hours' => rand(10, 100),
+                'Student_rank' => $i, // Assign rank based on loop index
+                'Student_ID' => $userId,
+                'Total_hours' => rand(10, 100), // Random total hours between 10 and 100
+                'created_at' => now(),
+                'updated_at' => now(),
             ]);
         }
     }

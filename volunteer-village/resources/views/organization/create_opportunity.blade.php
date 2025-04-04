@@ -23,7 +23,10 @@
                     <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('opportunities.view') }}">View Opportunities</a>
+                    <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>

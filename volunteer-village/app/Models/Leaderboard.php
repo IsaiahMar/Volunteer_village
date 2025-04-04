@@ -13,7 +13,8 @@ class Leaderboard extends Model
 
     protected $fillable = [
         'student_id',
-        'total_hours',
+        'Student_rank', // Add Student_rank to fillable
+        'Total_hours',  // Add Total_hours to fillable
     ];
 
     public function student()

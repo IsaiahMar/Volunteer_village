@@ -16,11 +16,25 @@ class StudentSeeder extends Seeder
      */
     public function run()
     {
+        // Clear the users and leaderboard tables before seeding
+        DB::table('users')->truncate();
+        DB::table('leaderboard')->truncate();
+
         for ($i = 1; $i <= 10; $i++) {
+            // Generate unique first name, last name, and email
+            $firstName = "StudentFirstName$i";
+            $lastName = "StudentLastName$i";
+            $email = "student$i@example.com";
+            $phone = "123-456-789$i";
+            $dateOfBirth = now()->subYears(20)->subDays($i)->toDateString(); // Example DOB
+
             // Insert student into users table
-            DB::table('users')->insert([
-                'name' => "Student $i",
-                'email' => "student$i@example.com",
+            $userId = DB::table('users')->insertGetId([
+                'first_name' => $firstName,
+                'last_name' => $lastName,
+                'email' => $email,
+                'phone' => $phone,
+                'dateOfBirth' => $dateOfBirth,
                 'email_verified_at' => now(),
                 'password' => Hash::make('password'), // password
                 'role' => 'student',
@@ -33,10 +47,9 @@ class StudentSeeder extends Seeder
 
             // Insert student into leaderboard table
             DB::table('leaderboard')->insert([
-                'student_id' => $i,
-                'total_hours' => rand(10, 100), // Random total hours between 10 and 100
-                'created_at' => now(),
-                'updated_at' => now(),
+                'Student_rank' => $i, // Assign rank based on loop index
+                'Student_ID' => $userId,
+                'Total_hours' => rand(10, 100), // Random total hours between 10 and 100
             ]);
         }
     }

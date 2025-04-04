@@ -16,7 +16,8 @@ class CreateLeaderboardTable extends Migration
         Schema::create('leaderboard', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id')->index();
-            $table->integer('total_hours');
+            $table->integer('Student_rank');
+            $table->integer('Total_hours'); // Add Total_hours column
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');

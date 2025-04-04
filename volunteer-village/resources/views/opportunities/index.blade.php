@@ -20,6 +20,9 @@
                     <a class="nav-link" href="#">Profile</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link active" href="{{ route('leaderboard') }}">Leaderboard</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
                 <li class="nav-item">
