@@ -41,10 +41,14 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name
 // //messaging routes
 // Route::get('/messaging', Messaging::class)->name('messaging');
 
-//start of organization routes
+//start of organization routes (public access)
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
-Route::get('/organization/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('organization.createOpportunity');
-Route::post('/organization/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('organization.storeOpportunity');
+
+// Protected organization routes
+Route::middleware('auth')->group(function () {
+    Route::get('/organization/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('organization.createOpportunity');
+    Route::post('/organization/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('organization.storeOpportunity');
+});
 //end of organization routes
 
 //teacher routes
@@ -66,8 +70,11 @@ Route::post('/register', [RegisteredUserController::class, 'store']);
 // Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 // Route::post('/register', [RegisterController::class, 'register']);
 
+// Public profile routes
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+
+// Protected profile routes
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
