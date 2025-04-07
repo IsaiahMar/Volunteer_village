@@ -102,8 +102,11 @@
             <h2>Register</h2>
             <form action="{{ route('register') }}" method="POST">
                 @csrf
-                <label>Name</label>
-                <input type="text" name="name" required>
+                <label>First Name</label>
+                <input type="text" name="first_name" required>
+
+                <label>Last Name</label>
+                <input type="text" name="last_name" required>
                 
                 <label>Email</label>
                 <input type="email" name="email" required>
