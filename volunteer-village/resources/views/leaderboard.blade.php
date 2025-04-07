@@ -33,7 +33,7 @@
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('teacher.home') }}">Home</a>
+                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
@@ -41,18 +41,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
+                @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
-                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
         <div class="content p-4">

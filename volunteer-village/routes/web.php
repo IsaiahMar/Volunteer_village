@@ -36,10 +36,12 @@ Route::get('/', function () {
 //view opportunities
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
+
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 //messaging routes
 Route::get('/messaging', \App\Http\Controllers\MessagingController::class)->name('messaging');
+
 
 //start of organization routes (public access)
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
@@ -62,7 +64,6 @@ Route::get('/dashboard', function () {
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
-
 
 
 Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
@@ -89,9 +90,10 @@ Route::get('/student-home', function () {
 
 Route::get('/student-home', [StudentController::class, 'home'])->name('home');
 // Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
-Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
+// Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
 Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
 Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
 Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
 
+//leaderboard route
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');

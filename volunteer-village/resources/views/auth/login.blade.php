@@ -1,4 +1,9 @@
 <x-guest-layout>
+    <!-- App Logo -->
+    <div class="flex justify-center mt-6">
+        <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="w-32 h-32">
+    </div>
+
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
