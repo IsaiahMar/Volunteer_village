@@ -14,6 +14,9 @@
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('teacher.home') }}">Home</a>
                 </li>
                 <li class="nav-item">

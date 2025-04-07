@@ -1,3 +1,4 @@
+{{-- filepath: c:\Users\kisha\OneDrive\Desktop\CapStone\Volunteer_village\volunteer-village\resources\views\organization\create_opportunity.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,30 +15,31 @@
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('organization.home') }}">Home</a>
+                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
+                @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
+                    </li>
+                @endif
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('leaderboard') }}">Leaderboard</a>
+                    <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
-                </li>
+                </li> --}}
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
                 </li> --}}
-                
-              
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
         <div class="container mt-5" style="margin-left: 270px;">

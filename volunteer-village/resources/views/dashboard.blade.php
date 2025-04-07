@@ -23,13 +23,18 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
+                @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                         @csrf
-                        <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none; background: none;">Logout</button>
+                        <button type="submit" class="nav-link btn btn-danger text-white" style="padding: 10px; border: none; background: red; border-radius: 5px;">Logout</button>
                     </form>
                 </li>
             </ul>

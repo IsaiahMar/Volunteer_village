@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+]<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -14,23 +14,25 @@
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('teacher.home') }}">Home</a>
+                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Profile</a>
+                    <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{ route('leaderboard') }}">Leaderboard</a>
+                    <a class="nav-link active" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
+                @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
+                    </li>
+                @endif
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
+                    <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li>
-                {{-- <li class="nav-item">
-                    <a class="nav-link">@livewire('messaging')</a>
-                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li>
