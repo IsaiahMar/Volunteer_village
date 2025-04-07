@@ -9,9 +9,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Livewire\Messaging;
+// use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 
 
@@ -35,9 +36,10 @@ Route::get('/', function () {
 //view opportunities
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-//messaging routes
-Route::get('/messaging', Messaging::class)->name('messaging');
+// //messaging routes
+// Route::get('/messaging', Messaging::class)->name('messaging');
 
 //start of organization routes (public access)
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
@@ -59,11 +61,14 @@ Route::get('/dashboard', function () {
 
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-Route::get('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+
+Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('/register', [RegisteredUserController::class, 'store']);
+// Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+// Route::post('/register', [RegisterController::class, 'register']);
 
 // Public profile routes
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');

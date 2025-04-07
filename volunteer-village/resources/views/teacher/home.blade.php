@@ -32,6 +32,12 @@
                     <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
                 </li> --}}
                 <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-link" style="padding: 0; border: none; background: none;">Logout</button>
+                    </form>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li>
             </ul>
@@ -64,6 +70,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="/js/footer.js"></script>
+    <script src="{{ asset('js/footer.js') }}"></script>
 </body>
 </html>
