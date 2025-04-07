@@ -51,9 +51,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li>
@@ -89,12 +89,12 @@
                             </div>
                         </div>
 
-                        <div class="p-4 sm:p-8 bg-dark shadow sm:rounded-lg">
+                        {{-- <div class="p-4 sm:p-8 bg-dark shadow sm:rounded-lg">
                             <div class="max-w-xl">
                                 @include('profile.partials.delete-user-form')
                                 <button type="button">Delete Account</button>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </x-app-layout>
