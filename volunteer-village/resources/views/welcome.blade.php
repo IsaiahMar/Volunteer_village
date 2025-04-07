@@ -10,52 +10,42 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
     
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 
     <style>
         body {
             font-family: 'Figtree', sans-serif;
-            background-color: blue;
-        }
-        .hero {
-            background: url('{{ asset('images/hero-bg.jpg') }}') no-repeat center center/cover;
-            text-align: center;
+            background-color: grey;
             color: white;
-            padding: 80px 20px;
+            text-align: center;
+            margin: 0;
+            padding: 0;
         }
-        .hero h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
+        .logo {
+            margin: 50px auto 20px;
+            display: block;
+            width: 150px;
         }
-        .hero p {
-            font-size: 1.2rem;
-            margin-top: 10px;
+        .header {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 30px;
         }
-        .btn-primary {
+        .btn-container {
+            margin-top: 20px;
+        }
+        .btn {
             background-color: #007bff;
             color: white;
             padding: 10px 20px;
             border-radius: 5px;
             text-decoration: none;
+            font-size: 1rem;
+            margin: 10px;
+            display: inline-block;
         }
-        .features {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            padding: 50px 20px;
-        }
-        .feature-box {
-            width: 30%;
-            background: white;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-        }
-        .feature-box img {
-            width: 50px;
-            margin-bottom: 10px;
+        .btn:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -77,7 +67,7 @@
         @endif
     </div>
 
-    <!-- Authentication Forms -->
+    <!-- Centered Logo and Welcome Message -->
     <div class="container">
         <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
         <h1 class="header">Welcome to Volunteer Village</h1>
@@ -121,18 +111,5 @@
             </form>
         </div>
     </div>
-    
-    <!-- Script for Toggle Register Form -->
-    <script>
-        document.getElementById('toggleRegisterForm').addEventListener('click', function() {
-            var registerForm = document.getElementById('registerForm');
-            registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
-        });
-    </script>
 </body>
 </html>
-
-
-
-
-

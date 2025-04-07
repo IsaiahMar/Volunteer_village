@@ -24,6 +24,8 @@ class User extends Authenticatable
         'dateOfBirth',
         'password',
         'role',
+        'phone',
+        'dateOfBirth',
         'student_id',
         'teacher_id'
     ];

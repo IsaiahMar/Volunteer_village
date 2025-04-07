@@ -34,9 +34,11 @@
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
                 </li> --}}
+            
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li>
+
             </ul>
         </div>
         <div class="content p-4">
