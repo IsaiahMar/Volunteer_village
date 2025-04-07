@@ -36,8 +36,12 @@ Route::get('/', function () {
 //view opportunities
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
-// //messaging routes
-// Route::get('/messaging', Messaging::class)->name('messaging');
+
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+
+//messaging routes
+Route::get('/messaging', \App\Http\Controllers\MessagingController::class)->name('messaging');
+
 
 //start of organization routes (public access)
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');

@@ -72,10 +72,43 @@
         <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
         <h1 class="header">Welcome to Volunteer Village</h1>
         
-        <!-- Buttons -->
-        <div class="btn-container">
-            <a href="{{ route('login') }}" class="btn">Log In</a>
-            <a href="{{ route('register') }}" class="btn">Register</a>
+        <div class="form-box">
+            <h2>Login</h2>
+            <form action="{{ route('login') }}" method="POST">
+                @csrf
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <button type="submit">Login</button>
+            </form>
+        </div>
+
+        <button id="toggleRegisterForm">New here? Click to register</button>
+
+        <div class="form-box" id="registerForm" style="display: none;">
+            <h2>Register</h2>
+            <form action="{{ route('register') }}" method="POST">
+                @csrf
+                <label>First Name</label>
+                <input type="text" name="first_name" required>
+
+                <label>Last Name</label>
+                <input type="text" name="last_name" required>
+                
+                <label>Email</label>
+                <input type="email" name="email" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" required>
+                
+                <label>Confirm Password</label>
+                <input type="password" name="password_confirmation" required>
+                
+                <button type="submit">Register</button>
+            </form>
         </div>
     </div>
 </body>
