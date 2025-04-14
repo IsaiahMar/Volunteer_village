@@ -1,12 +1,30 @@
-{{-- filepath: c:\Users\kisha\OneDrive\Desktop\CapStone\Volunteer_village\volunteer-village\resources\views\organization\create_opportunity.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Volunteer Opportunity</title>
+    <title>Leaderboard</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Page-specific styles */
+        .leaderboard-table {
+            font-size: 1.2rem;
+            color: darkblue;
+        }
+        .leaderboard-table .chess-piece {
+            font-size: 2rem;
+        }
+        .leaderboard-table .chess-piece.king {
+            color: gold;
+        }
+        .leaderboard-table .chess-piece.queen {
+            color: silver;
+        }
+        .leaderboard-table .chess-piece.rook {
+            color: bronze;
+        }
+    </style>
 </head>
 <body>
     <div class="d-flex">
@@ -25,7 +43,7 @@
                 </li>
                 @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
+                        <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
                     </li>
                 @endif
                 <li class="nav-item">
@@ -33,41 +51,42 @@
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
-                </li> --}}
-                {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
-                </li> --}}
-                {{-- <li class="nav-item">
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li> --}}
             </ul>
         </div>
-        <div class="container mt-5" style="margin-left: 270px;">
-            <h1>Create Volunteer Opportunity</h1>
-            <form action="{{ route('organization.storeOpportunity') }}" method="POST">
-                @csrf
-                <div class="form-group">
-                    <label for="Name">Name</label>
-                    <input type="text" class="form-control" id="Name" name="Name" required>
-                </div>
-                <div class="form-group">
-                    <label for="Date">Date</label>
-                    <input type="date" class="form-control" id="Date" name="Date" required>
-                </div>
-                <div class="form-group">
-                    <label for="Location">Location</label>
-                    <input type="text" class="form-control" id="Location" name="Location" required>
-                </div>
-                <div class="form-group">
-                    <label for="Max_students">Max Students</label>
-                    <input type="number" class="form-control" id="Max_students" name="Max_students" required>
-                </div>
-                <div class="form-group">
-                    <label for="Description">Description</label>
-                    <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Create</button>
-            </form>
+        <div class="content p-4">
+            <h1>Leaderboard</h1>
+            <table class="table table-bordered leaderboard-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Total Hours</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($leaderboard as $index => $student)
+                        <tr>
+                            <td>
+                                @if($index == 0)
+                                    <span class="chess-piece king">♔</span>
+                                @elseif($index == 1)
+                                    <span class="chess-piece queen">♕</span>
+                                @elseif($index == 2)
+                                    <span class="chess-piece rook">♖</span>
+                                @else
+                                    {{ $index + 1 }}
+                                @endif
+                            </td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->total_hours }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
     <footer class="bg-light text-center py-3 mt-auto">

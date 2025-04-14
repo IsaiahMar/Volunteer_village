@@ -1,23 +1,12 @@
 <x-guest-layout>
+    <!-- App Logo -->
+    <div class="flex justify-center mt-6">
+        <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="w-32 h-32">
+    </div>
+
+    <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
-
-    <div class="navbar">
-            @if (Route::has('login'))
-                <div class="navbar_items">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="word">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="word">Log in</a>
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="word">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
-        </div>
-    <br><br><br><br><br><br>
     <form method="POST" action="{{ route('login') }}">
         @csrf
 
@@ -56,10 +45,15 @@
             @endif
 
             <x-primary-button class="ms-3">
-                Login
+                {{ __('Login') }}
             </x-primary-button>
         </div>
     </form>
 
-   
+    <!-- Register Button -->
+    <div class="flex items-center justify-center mt-4">
+        <a href="{{ route('register') }}" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+            {{ __('Don\'t have an account? Register here') }}
+        </a>
+    </div>
 </x-guest-layout>

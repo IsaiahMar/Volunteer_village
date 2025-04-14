@@ -1,9 +1,10 @@
 <?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDescriptionToVolunteerOpportunitiesTable extends Migration
+class CreateVolunteerOpportunitiesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +13,14 @@ class AddDescriptionToVolunteerOpportunitiesTable extends Migration
      */
     public function up()
     {
-        Schema::table('volunteer_opportunities', function (Blueprint $table) {
+        Schema::create('volunteer_opportunities', function (Blueprint $table) {
+            $table->id();
+            $table->string('Name');
+            $table->date('Date');
+            $table->string('Location');
+            $table->integer('Max_students');
             $table->text('Description')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -24,8 +31,6 @@ class AddDescriptionToVolunteerOpportunitiesTable extends Migration
      */
     public function down()
     {
-        Schema::table('volunteer_opportunities', function (Blueprint $table) {
-            $table->dropColumn('Description');
-        });
+        Schema::dropIfExists('volunteer_opportunities');
     }
 }
