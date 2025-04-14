@@ -1,24 +1,26 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class StudentController extends Controller
 {
-    public function home()
-{
-    // // $verifiedHours = []; // Fetch verified hours from the database
-    // return view('StudentHome', compact('verifiedHours'));
-}
+    /**
+     * Display the student home page.
+     */
+    public function home(): View
+    {
+    
+        return view('student.StudentHome', ['verifiedHours' => []]);
+    }
 
-public function profile()
-{
-    return view('profile');
+    /**
+     * Display the student profile page.
+     */
+    public function profile(): View
+    {
+        return view('student.profile'); 
+    }
 }
-
-public function logout(Request $request)
-{
-
-}
-}
-
