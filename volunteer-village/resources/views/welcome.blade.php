@@ -64,11 +64,6 @@
             <div class="navbar_items">
                 @auth
                     {{-- <a href="{{ url('/dashboard') }}" class="word">Dashboard</a> --}}
-                @else
-                    <a href="{{ route('login') }}" class="word">Log in</a>
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="word">Register</a>
-                    @endif
                 @endauth
             </div>
         @endif
