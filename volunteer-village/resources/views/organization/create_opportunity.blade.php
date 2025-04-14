@@ -1,4 +1,3 @@
-{{-- filepath: c:\Users\kisha\OneDrive\Desktop\CapStone\Volunteer_village\volunteer-village\resources\views\organization\create_opportunity.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>

@@ -20,9 +20,16 @@
             text-align: center;
             margin: 0;
             padding: 0;
+            display: flex; /* Add flexbox */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+        }
+        .container {
+            text-align: center; /* Ensure text remains centered */
         }
         .logo {
-            margin: 50px auto 20px;
+            margin: 0 auto 20px; /* Adjust margin for centering */
             display: block;
             width: 150px;
         }
@@ -56,7 +63,7 @@
         @if (Route::has('login'))
             <div class="navbar_items">
                 @auth
-                    <a href="{{ url('/dashboard') }}" class="word">Dashboard</a>
+                    {{-- <a href="{{ url('/dashboard') }}" class="word">Dashboard</a> --}}
                 @else
                     <a href="{{ route('login') }}" class="word">Log in</a>
                     @if (Route::has('register'))

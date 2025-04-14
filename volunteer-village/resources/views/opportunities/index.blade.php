@@ -30,12 +30,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
         <div class="content p-4">
