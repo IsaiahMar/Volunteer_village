@@ -73,7 +73,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-// student routes
+
+
+// Group student-specific routes
+Route::prefix('student')->name('student.')->group(function () {
+
+
+    Route::get('/StudentHome', [StudentController::class, 'home'])->name('home');
+    Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
+    Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
+    Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
+    Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
+    Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
+    Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
+
 Route::get('/student-home', [StudentController::class, 'home'])->name('home');
 Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
 Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
@@ -82,8 +95,11 @@ Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])
 // leaderboard
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
 
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 });
 
 require __DIR__.'/auth.php';
+
+
