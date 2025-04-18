@@ -83,32 +83,18 @@ Route::middleware('auth')->group(function () {
 
 
 require __DIR__.'/auth.php';
-Route::get('/student-home', function () {
-    return view('StudentHome'); // No subfolder needed
-});
-=======
 
 // Group student-specific routes
 Route::prefix('student')->name('student.')->group(function () {
-
-
-    Route::get('/StudentHome', [StudentController::class, 'home'])->name('home');
+    Route::get('/home', [StudentController::class, 'home'])->name('home');
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
     Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
     Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
+    Route::post('/submit-hours', [StudentController::class, 'storeHours'])->name('submit.hours.store');
     Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
     Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
     Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
-
-
-Route::get('/student-home', [StudentController::class, 'home'])->name('home');
-// Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
-// Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
-Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
-Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
-Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
+});
 
 //leaderboard route
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
-=======
-});
