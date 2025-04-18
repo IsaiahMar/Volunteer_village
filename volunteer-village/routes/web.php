@@ -72,8 +72,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
+// admin routes
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin']);
+Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin']);
 
 // Group student-specific routes
 Route::prefix('student')->name('student.')->group(function () {
@@ -92,9 +93,12 @@ Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('su
 Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
 Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
 
-// leaderboard
-Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+});
 
+// leaderboard (moved outside student group)
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])
+    ->name('leaderboard')
+    ->middleware('auth');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -102,4 +106,4 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 
 require __DIR__.'/auth.php';
 
-});
+
