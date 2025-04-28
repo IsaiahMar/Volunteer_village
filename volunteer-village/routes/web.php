@@ -10,7 +10,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\OrganizationOpportunityController;
-use App\Livewire\Messaging;
+use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -39,6 +39,7 @@ Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opp
 
 // //messaging routes
 Route::get('/messaging', Messaging::class)->name('messaging');
+
 
 //start of organization routes (public access)
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
