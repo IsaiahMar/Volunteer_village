@@ -43,6 +43,12 @@ class User extends Authenticatable
         });
     }
 
+
+    public function opportunities()
+{
+    return $this->hasMany(VolunteerOpportunity::class, 'organization_id', 'id');
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *

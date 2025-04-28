@@ -98,7 +98,7 @@ class OrganizationController extends Controller
             'Description' => $request->Description,
         ]);
     
-        return redirect()->route('organization.home')->with('success', 'Volunteer opportunity created successfully.');
+        return redirect()->route('organization.createOpportunity')->with('success', 'Volunteer opportunity created successfully.');
     }
 
     public function viewOpportunities()
