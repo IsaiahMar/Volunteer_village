@@ -65,16 +65,8 @@
                     <label for="Description">Description</label>
                     <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Create</button>
-            </form>
+            </div>
         </div>
     </div>
-    <footer class="bg-light text-center py-3 mt-auto">
-        <p>&copy; 2025 Volunteer Village. All rights reserved.</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="/js/footer.js"></script>
-</body>
-</html>
+</div>
+@endsection

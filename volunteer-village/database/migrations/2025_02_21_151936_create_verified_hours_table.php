@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('verified_hours', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('opportunity_id')->constrained('volunteer_opportunities')->onDelete('cascade');
+            $table->integer('hours');
+            $table->string('status')->default('pending'); // pending, verified, rejected
+            $table->text('description')->nullable();
+            $table->date('date');
             $table->timestamps();
         });
     }

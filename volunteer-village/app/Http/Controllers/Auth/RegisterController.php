@@ -7,20 +7,23 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function showRegistrationForm()
+    use RegistersUsers;
+
+    protected $redirectTo = '/dashboard';
+
+    public function __construct()
     {
-        return view('auth.register');
+        $this->middleware('guest');
     }
 
-    public function register(Request $request)
+
+    protected function validator(array $data)
     {
-        // Validate the incoming request data
-        $request->validate([
+        return Validator::make($data, [
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
@@ -58,20 +61,15 @@ class RegisterController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->route('dashboard');
-        }
-
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
+        return User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'role' => $data['role'],
         ]);
     }
+
 
     public function logout(Request $request)
     {
@@ -82,3 +80,4 @@ class RegisterController extends Controller
         return redirect('/');
     }
 }
+

@@ -20,6 +20,8 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'phone',
+        'dateOfBirth',
         'password',
         'role',
         'phone',
@@ -73,7 +75,7 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-        return $this->is_admin;
+        return $this->role === 'admin';
     }
 
     /**
