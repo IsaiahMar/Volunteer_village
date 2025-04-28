@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\OrganizationOpportunityController;
 use App\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
@@ -41,6 +42,16 @@ Route::get('/messaging', Messaging::class)->name('messaging');
 
 //start of organization routes (public access)
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
+
+Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
+    Route::get('/opportunities', [OrganizationOpportunityController::class, 'index'])->name('opportunities.index');
+    Route::put('/opportunities/{id}', [OrganizationOpportunityController::class, 'update'])->name('opportunities.update');
+    Route::delete('/opportunities/{id}', [OrganizationOpportunityController::class, 'destroy'])->name('opportunities.destroy');
+    Route::get('/opportunities/create', [OrganizationOpportunityController::class, 'create'])->name('createOpportunity');
+    Route::post('/opportunities', [OrganizationOpportunityController::class, 'store'])->name('storeOpportunity');
+});
+
+
 
 // Protected organization routes
 Route::middleware('auth')->group(function () {

@@ -20,4 +20,10 @@ class VolunteerOpportunity extends Model
         'Max_students',
         'Description',
     ];
+
+    // Define the relationship with the User model
+    public function organization()
+    {
+        return $this->belongsTo(User::class, 'organization_id', 'id');
+    }
 }
