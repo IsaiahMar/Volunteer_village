@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -20,7 +21,6 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -32,8 +32,17 @@ class RegisterController extends Controller
             'phone' => ['required', 'string', 'max:15'],
             'dateOfBirth' => ['required', 'date'],
         ]);
+    }
 
-        // Create the user
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
         $user = User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
@@ -44,40 +53,9 @@ class RegisterController extends Controller
             'dateOfBirth' => $request->dateOfBirth,
         ]);
 
-        // Log the user in
         Auth::login($user);
 
-        // Redirect to the dashboard
         return redirect()->route('dashboard');
-    }
-
-    /**
-     * Show the login form.
-     */
-    public function showLoginForm()
-    {
-        return view('auth.login');
-    }
-
-    public function login(Request $request)
-    {
-        return User::create([
-            'first_name' => $data['first_name'],
-            'last_name' => $data['last_name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => $data['role'],
-        ]);
-    }
-
-
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return redirect('/');
     }
 }
 

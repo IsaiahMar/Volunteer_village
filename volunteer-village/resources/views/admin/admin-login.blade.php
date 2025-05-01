@@ -4,7 +4,7 @@
     <div class="card">
         <div class="card-body">
             <h3 class="card-title text-center mb-4">Admin Login</h3>
-            <form method="POST" action="{{ route('admin.login') }}">
+            <form method="POST" action="{{ route('admin.login.submit') }}">
                 @csrf
                 <div class="form-group mb-3">
                     <label for="email" class="form-label">Email</label>
@@ -20,6 +20,10 @@
                 </div>
                 <button type="submit" class="btn btn-primary w-100">Login as Admin</button>
             </form>
+            
+            <div class="text-center mt-3">
+                <a href="{{ route('login') }}" class="text-decoration-none">Back to Regular Login</a>
+            </div>
         </div>
     </div>
 @endsection
