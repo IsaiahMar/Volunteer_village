@@ -13,7 +13,7 @@ class AdminUserSeeder extends Seeder
         DB::table('admin')->insert([
             'admin_name' => 'Admin User',
             'admin_pass' => Hash::make('Quack123!'),
-            'admin_type' => 'admin',
+            'admin_type' => 'Admin',
             'contact_info' => 'admin@volunteervillage.com',
             'created_at' => now(),
             'updated_at' => now()

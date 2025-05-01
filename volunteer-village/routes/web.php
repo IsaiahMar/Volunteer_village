@@ -3,7 +3,6 @@
 use App\Http\Controllers\OpportunityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
@@ -14,6 +13,7 @@ use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,9 +73,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-Route::get('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
 
 Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register']);
@@ -89,9 +91,28 @@ Route::middleware('auth')->group(function () {
 });
 
 // admin routes
-Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin']);
-Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin']);
+Route::middleware(['web'])->group(function () {
+    Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login.submit');
 
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+        Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+        
+        // Schools routes
+        Route::resource('schools', AdminController::class)->names([
+            'index' => 'admin.schools.index',
+            'create' => 'admin.schools.create',
+            'store' => 'admin.schools.store',
+            'edit' => 'admin.schools.edit',
+            'update' => 'admin.schools.update',
+            'destroy' => 'admin.schools.destroy',
+        ]);
+    });
+});
 
 // Group student-specific routes
 Route::prefix('student')->name('student.')->group(function () {
@@ -111,10 +132,5 @@ Route::prefix('student')->name('student.')->group(function () {
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])
     ->name('leaderboard')
     ->middleware('auth');
-
-
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-});
 
 require __DIR__.'/auth.php';
