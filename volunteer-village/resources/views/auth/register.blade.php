@@ -4,6 +4,7 @@
         <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="w-32 h-32">
     </div>
 
+
     <!-- Gradient Background and Registration Form -->
     <div class="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">
         <div class="bg-white p-10 rounded-xl shadow-lg w-full max-w-xl">
@@ -26,6 +27,7 @@
                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-400"
                                required>
                     </div>
+
                 </div>
 
                 <!-- Email -->
@@ -54,13 +56,14 @@
 
                 <!-- Role -->
                 <div class="mb-4">
-                    <label for="role" class="block text-gray-700 mb-1">Role</label>
-                    <select id="role" name="role"
-                            class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-pink-400"
-                            required>
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                        <option value="organization">Organization</option>
+
+                    <label for="role" class="block text-gray-700">Role</label>
+                    <select id="role" name="role" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400" required>
+                        <option value="">Select Role</option>
+                        <option value="student" {{ old('role') == 'student' ? 'selected' : '' }}>Student</option>
+                        <option value="teacher" {{ old('role') == 'teacher' ? 'selected' : '' }}>Teacher</option>
+                        <option value="admin" {{ old('role') == 'organization' ? 'selected' : '' }}>Organization</option>
+
                     </select>
                 </div>
 
@@ -96,7 +99,8 @@
 
                 <!-- Login Link -->
                 <div class="mt-4 text-center">
-                    <a href="{{ route('login') }}" class="text-pink-500 hover:underline">Login now</a>
+                    <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Already registered? Login now</a>
+
                 </div>
             </form>
         </div>

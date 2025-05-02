@@ -35,6 +35,9 @@
                     <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('messaging') }}">Messages</a>
+                </li>
+                <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST" style="display: inline;">
                         @csrf
                         <button type="submit" class="nav-link btn btn-danger text-white" style="padding: 10px; border: none; background: red; border-radius: 5px;">Logout</button>

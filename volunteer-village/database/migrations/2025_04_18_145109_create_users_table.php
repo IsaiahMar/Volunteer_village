@@ -21,6 +21,16 @@ return new class extends Migration
             $table->string('password'); // Password column
             $table->string('role'); // Role column
             $table->timestamps(); // Created at and updated at columns
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('dateOfBirth')->nullable();
+            $table->timestamp('email_verified_at')->nullable();
+            $table->string('password');
+            $table->string('role');
+            $table->rememberToken();
+            $table->timestamps();
         });
     }
 

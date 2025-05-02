@@ -17,7 +17,7 @@ class CreateLeaderboardTable extends Migration
             $table->id();
             $table->unsignedBigInteger('student_id')->index();
             $table->integer('Student_rank');
-            $table->integer('Total_hours'); // Add Total_hours column
+            $table->integer('Total_hours');
             $table->timestamps();
 
             $table->foreign('student_id')->references('id')->on('users')->onDelete('cascade');
