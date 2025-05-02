@@ -12,8 +12,11 @@ use App\Http\Controllers\OrganizationOpportunityController;
 use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,7 +46,11 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
 // //messaging routes
-Route::get('/messaging', Messaging::class)->name('messaging');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('messages.destroy');
+});
 
 
 // organization routes
