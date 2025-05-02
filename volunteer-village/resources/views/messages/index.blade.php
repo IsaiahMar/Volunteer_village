@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Messages</title>
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -45,15 +45,65 @@
 
         <!-- Main Content -->
         <div class="content p-4">
-            <h1>Welcome to Your Dashboard</h1>
-            <p>{{ __("You're logged in!") }}</p>
+            <h1>Messages</h1>
 
-            <h2>Quick Links</h2>
-            <ul>
-                <li><a href="{{ route('profile.show') }}">Edit Your Profile</a></li>
-                <li><a href="{{ route('opportunities.index') }}">Browse Volunteer Opportunities</a></li>
-                <li><a href="{{ route('leaderboard') }}">View Leaderboard</a></li>
-            </ul>
+            <style>
+                .messages {
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    max-height: 400px;
+                    overflow-y: auto;
+                }
+                .message {
+                    margin-bottom: 15px;
+                }
+                .text-right {
+                    text-align: right;
+                }
+                .text-left {
+                    text-align: left;
+                }
+            </style>
+
+            <!-- Message Form -->
+            <form action="{{ route('messages.store') }}" method="POST">
+                @csrf
+                <div class="form-group">
+                    <label for="receiver_id">Send To:</label>
+                    <select name="receiver_id" id="receiver_id" class="form-control" required>
+                        <option value="">Select a user</option>
+                        @foreach ($users as $user)
+                            <option value="{{ $user->id }}">{{ $user->first_name }} {{ $user->last_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea name="message" id="message" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+
+            <!-- Messages List -->
+            <h2 class="mt-4">Conversations</h2>
+            <div class="messages">
+                @foreach ($messages as $message)
+                    <div class="message {{ $message->sender_id == auth()->id() ? 'text-right' : 'text-left' }}">
+                        <strong>{{ $message->sender->first_name }}:</strong>
+                        <p>{{ $message->message }}</p>
+                        <small>{{ $message->created_at->format('d M Y, h:i A') }}</small>
+
+                        @if ($message->sender_id == auth()->id())
+                            <!-- Delete Button -->
+                            <form action="{{ route('messages.destroy', $message->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
         </div>
     </div>
 
