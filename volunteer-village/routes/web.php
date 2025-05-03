@@ -3,20 +3,19 @@
 use App\Http\Controllers\OpportunityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
 // use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\OrganizationOpportunityController;
-use App\Livewire\Messaging;
+use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MessageController;
-
-
+use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\AdminController;
 
 
 /*
@@ -30,12 +29,20 @@ use App\Http\Controllers\MessageController;
 |
 */
 
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-//view opportunities
+// Schools routes
+Route::middleware(['auth'])->group(function () {
+    Route::resource('schools', SchoolController::class);
+    Route::post('/schools/{school}/approve', [SchoolController::class, 'approve'])
+        ->name('schools.approve')
+        ->middleware('can:approve,school');
+});
+
+// [Rest of your existing routes remain unchanged...]
+// view opportunities
 Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 
 // //messaging routes
@@ -46,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->name('messages.get');
 });
 
-//start of organization routes (public access)
+
+// organization routes
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
 
 Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
@@ -64,49 +72,73 @@ Route::middleware('auth')->group(function () {
     Route::get('/organization/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('organization.createOpportunity');
     Route::post('/organization/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('organization.storeOpportunity');
 });
-//end of organization routes
 
-//teacher routes
+// teacher routes
 Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
-//end of teacher routes
+
+// dashboard and auth routes
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
+
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
+Route::post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
 
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 
-Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
-Route::post('/register', [RegisteredUserController::class, 'store']);
-// Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-// Route::post('/register', [RegisterController::class, 'register']);
-
-// Public profile routes
+// profile routes
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-
-// Protected profile routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// admin routes
+Route::middleware(['web'])->group(function () {
+    Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login.submit');
 
-require __DIR__.'/auth.php';
-Route::get('/student-home', function () {
-    return view('StudentHome'); // No subfolder needed
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+        Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+        
+        // Schools routes
+        Route::resource('schools', AdminController::class)->names([
+            'index' => 'admin.schools.index',
+            'create' => 'admin.schools.create',
+            'store' => 'admin.schools.store',
+            'edit' => 'admin.schools.edit',
+            'update' => 'admin.schools.update',
+            'destroy' => 'admin.schools.destroy',
+        ]);
+    });
 });
 
+// Group student-specific routes
+Route::prefix('student')->name('student.')->group(function () {
+    Route::get('/home', [StudentController::class, 'home'])->name('home');
+    Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
+    Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
+    Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
+    Route::post('/submit-hours', [StudentController::class, 'storeHours'])->name('submit.hours.store');
+    Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
+    Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
+    Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
 
-Route::get('/student-home', [StudentController::class, 'home'])->name('home');
-// Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
-// Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
-Route::get('/submit-hours', [StudentController::class, 'submitHours'])->name('submit.hours');
-Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
-Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
 
-//leaderboard route
-Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+});
+
+// leaderboard (moved outside student group)
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])
+    ->name('leaderboard')
+    ->middleware('auth');
+
+require __DIR__.'/auth.php';

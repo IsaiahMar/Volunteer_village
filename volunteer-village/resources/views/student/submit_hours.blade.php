@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Home - Volunteer Village</title>
+    <title>Submit Hours - Volunteer Village</title>
     <link rel="stylesheet" href="{{ asset('css/student.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -21,7 +21,7 @@
                     <a class="nav-link" href="{{ route('student.profile') }}">Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.submit.hours') }}">Submit Service Hours</a>
+                    <a class="nav-link active" href="{{ route('student.submit.hours') }}">Submit Service Hours</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('student.your.hours') }}">Your Hours/Awards</a>
@@ -43,54 +43,57 @@
 
         <!-- Main Content -->
         <div class="content p-4">
-            <h1>Student Home</h1>
+            <h1>Submit Volunteer Hours</h1>
             
-            <!-- Hour Counter -->
-            <div class="card mb-4">
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <div class="card">
                 <div class="card-body">
-                    <h2>Total Hours This Month</h2>
-                    <p class="display-4">{{ $verifiedHours->sum('hours') }} Hours</p>
-                </div>
-            </div>
-
-            <h2>Impact Stream</h2>
-            <div class="row">
-                <!-- Hardcoded Post -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Helping with youth baseball coaching!</h3>
-                            <img src="{{ asset('storage/pictures/volunteer.jpeg') }}" alt="Volunteer Coaching!" class="img-fluid">
+                    <form action="{{ route('student.submit.hours.store') }}" method="POST">
+                        @csrf
+                        
+                        <div class="form-group">
+                            <label for="opportunity">Select Opportunity</label>
+                            <select class="form-control" id="opportunity" name="opportunity_id" required>
+                                <option value="">Choose an opportunity</option>
+                                @foreach($opportunities as $opportunity)
+                                    <option value="{{ $opportunity->id }}">{{ $opportunity->Name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                    </div>
-                </div>
 
-                @foreach($verifiedHours as $hour)
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3>{{ $hour->opportunity->Name ?? 'Volunteer Service' }}</h3>
-                                <p><strong>Hours:</strong> {{ $hour->hours }}</p>
-                                <p><strong>Date:</strong> {{ $hour->date }}</p>
-                                @if($hour->description)
-                                    <p><strong>Description:</strong> {{ $hour->description }}</p>
-                                @endif
-                            </div>
+                        <div class="form-group">
+                            <label for="hours">Hours Completed</label>
+                            <input type="number" class="form-control" id="hours" name="hours" min="0.5" step="0.5" required>
                         </div>
-                    </div>
-                @endforeach
+
+                        <div class="form-group">
+                            <label for="date">Date of Service</label>
+                            <input type="date" class="form-control" id="date" name="date" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe what you did during your volunteer service..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit Hours</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-light text-center py-3 mt-auto">
-        <p>&copy; 2025 Volunteer Village. All rights reserved.</p>
-    </footer>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{{ asset('js/footer.js') }}"></script>
 </body>
-</html>
+</html> 
