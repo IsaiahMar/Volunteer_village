@@ -18,62 +18,6 @@
             overflow: hidden;
         }
 
-        .sidebar {
-            width: 250px;
-            background-color: #f8f9fa;
-            padding: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar.collapsed {
-            width: 70px;
-            padding: 20px 10px;
-        }
-
-        .sidebar.collapsed h2,
-        .sidebar.collapsed .nav-link span {
-            display: none;
-        }
-
-        .sidebar .logo {
-            max-width: 150px;
-            margin-bottom: 20px;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar.collapsed .logo {
-            max-width: 50px;
-        }
-
-        .sidebar .nav-link {
-            color: #333;
-            display: flex;
-            align-items: center;
-            padding: 10px;
-        }
-
-        .sidebar .nav-link i {
-            margin-right: 10px;
-            min-width: 20px;
-        }
-
-        .sidebar .nav-link:hover {
-            background-color: #e2e6ea;
-            border-radius: 5px;
-        }
-
-        .toggle-btn {
-            position: fixed;
-            top: 15px;
-            left: 15px;
-            z-index: 1001;
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 5px;
-        }
-
         .content {
             flex: 1;
             padding: 30px;
