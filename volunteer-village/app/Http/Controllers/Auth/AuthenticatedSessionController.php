@@ -5,15 +5,18 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
+use App\Models\Admin;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Display the regular login view.
      */
     public function create(): View
     {
@@ -21,12 +24,50 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Display the admin login view.
+     */
+    public function showAdminLogin(): View
+    {
+        return view('admin.admin-login');
+    }
+
+    /**
+     * Handle an incoming authentication request for regular users.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
+        $credentials = $request->only('email', 'password');
+        $remember = $request->boolean('remember');
 
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            return redirect()->intended(RouteServiceProvider::HOME);
+        }
+
+        return back()->withErrors([
+            'email' => trans('auth.failed'),
+        ])->onlyInput('email');
+    }
+
+    /**
+     * Handle an incoming authentication request for admins.
+     */
+    public function adminLogin(Request $request): RedirectResponse
+    {
+        $credentials = $request->only('email', 'password');
+        $remember = $request->boolean('remember');
+
+        $admin = Admin::where('admin_name', $credentials['email'])->first();
+        if ($admin && Hash::check($credentials['password'], $admin->getAuthPassword())) {
+            Auth::login($admin, $remember);
+            Session::put('is_admin', true);
+            $request->session()->regenerate();
+            return redirect()->intended(route('admin.dashboard'));
+        }
+
+        return back()->withErrors([
+            'email' => trans('auth.failed'),
+        ])->onlyInput('email');
         $request->session()->regenerate();
 
         // Get the authenticated user
@@ -53,11 +94,10 @@ class AuthenticatedSessionController extends Controller
     public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
-
         $request->session()->invalidate();
-
         $request->session()->regenerateToken();
-
         return redirect('/login');
     }
 }
+
+

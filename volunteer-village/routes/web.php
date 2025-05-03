@@ -78,6 +78,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// admin routes
+Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin']);
+Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin']);
+
 
 // Group student-specific routes
 Route::prefix('student')->name('student.')->group(function () {
@@ -97,9 +101,12 @@ Route::prefix('student')->name('student.')->group(function () {
     });
 });
 
-// leaderboard
-Route::get('/leaderboard', [LeaderboardController::class, 'index'])->name('leaderboard');
+});
 
+// leaderboard (moved outside student group)
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])
+    ->name('leaderboard')
+    ->middleware('auth');
 
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
