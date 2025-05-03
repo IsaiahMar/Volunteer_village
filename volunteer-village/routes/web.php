@@ -16,6 +16,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\DB;
 
 
 /*
@@ -76,9 +77,17 @@ Route::middleware('auth')->group(function () {
 // teacher routes
 Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
 
-// dashboard and auth routes
+
+// dashboard route
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $leaders = DB::table('leaderboard')
+        ->join('users', 'leaderboard.student_id', '=', 'users.id')
+        ->select('users.first_name as name', 'leaderboard.total_hours')
+        ->orderByDesc('leaderboard.total_hours')
+        ->limit(5)
+        ->get();
+
+    return view('dashboard', compact('leaders'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
