@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
     Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->name('messages.get');
 });
 
 //start of organization routes (public access)
