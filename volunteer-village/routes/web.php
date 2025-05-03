@@ -148,7 +148,6 @@ Route::prefix('student')->name('student.')->group(function () {
     });
 });
 
-});
 
 // leaderboard (moved outside student group)
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])
