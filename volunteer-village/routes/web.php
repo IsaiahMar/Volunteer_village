@@ -87,8 +87,11 @@ Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
 Route::post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::get('register', [RegisteredUserController::class, 'create'])->name('register');
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+
+
 
 // profile routes
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');

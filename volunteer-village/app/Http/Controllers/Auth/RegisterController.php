@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Foundation\Auth\RegistersUsers; 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -12,8 +12,7 @@ use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
-    use RegistersUsers;
-
+   
     protected $redirectTo = '/dashboard';
 
     public function __construct()
