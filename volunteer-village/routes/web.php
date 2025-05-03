@@ -43,7 +43,9 @@ Route::middleware(['auth'])->group(function () {
 
 // [Rest of your existing routes remain unchanged...]
 // view opportunities
-Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
+});
 
 // //messaging routes
 Route::middleware(['auth'])->group(function () {
@@ -78,6 +80,9 @@ Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.
 
 // dashboard and auth routes
 Route::get('/dashboard', function () {
+    if (auth()->user()->role === 'student') {
+        return redirect()->route('student.home');
+    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -135,7 +140,13 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
     Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
     Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
-
+    
+    // Service hours approval routes
+    Route::middleware(['auth', 'role:teacher,admin'])->group(function () {
+        Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
+        Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
+    });
+});
 
 });
 

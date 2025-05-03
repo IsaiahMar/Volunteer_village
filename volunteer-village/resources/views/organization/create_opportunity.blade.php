@@ -68,7 +68,8 @@
                     <label for="Description">Description</label>
                     <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
                 </div>
-            </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
         </div>
     </div>
 </div>

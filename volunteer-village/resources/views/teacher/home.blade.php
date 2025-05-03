@@ -26,10 +26,13 @@
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
+                    <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Verify Service Hours</a>
+                    <a class="nav-link" href="{{ route('student.pending.hours') }}">Verify Service Hours</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
                 </li>
                 {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
