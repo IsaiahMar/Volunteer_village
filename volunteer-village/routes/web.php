@@ -3,15 +3,20 @@
 use App\Http\Controllers\OpportunityController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
+// use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\OrganizationOpportunityController;
 use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SchoolController;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -42,11 +47,29 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
 });
 
-// messaging routes
-Route::get('/messaging', \App\Http\Controllers\MessagingController::class)->name('messaging');
+// //messaging routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->name('messages.get');
+});
+
 
 // organization routes
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
+
+Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
+    Route::get('/opportunities', [OrganizationOpportunityController::class, 'index'])->name('opportunities.index');
+    Route::put('/opportunities/{id}', [OrganizationOpportunityController::class, 'update'])->name('opportunities.update');
+    Route::delete('/opportunities/{id}', [OrganizationOpportunityController::class, 'destroy'])->name('opportunities.destroy');
+    Route::get('/opportunities/create', [OrganizationOpportunityController::class, 'create'])->name('createOpportunity');
+    Route::post('/opportunities', [OrganizationOpportunityController::class, 'store'])->name('storeOpportunity');
+});
+
+
+
+// Protected organization routes
 Route::middleware('auth')->group(function () {
     Route::get('/organization/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('organization.createOpportunity');
     Route::post('/organization/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('organization.storeOpportunity');
@@ -63,12 +86,17 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-Route::get('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+
+
+
 
 // profile routes
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -79,9 +107,28 @@ Route::middleware('auth')->group(function () {
 });
 
 // admin routes
-Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin']);
-Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin']);
+Route::middleware(['web'])->group(function () {
+    Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login.submit');
 
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+        Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+        
+        // Schools routes
+        Route::resource('schools', AdminController::class)->names([
+            'index' => 'admin.schools.index',
+            'create' => 'admin.schools.create',
+            'store' => 'admin.schools.store',
+            'edit' => 'admin.schools.edit',
+            'update' => 'admin.schools.update',
+            'destroy' => 'admin.schools.destroy',
+        ]);
+    });
+});
 
 // Group student-specific routes
 Route::prefix('student')->name('student.')->group(function () {
@@ -107,10 +154,5 @@ Route::prefix('student')->name('student.')->group(function () {
 Route::get('/leaderboard', [LeaderboardController::class, 'index'])
     ->name('leaderboard')
     ->middleware('auth');
-
-
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-});
 
 require __DIR__.'/auth.php';

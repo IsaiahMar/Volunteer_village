@@ -15,16 +15,16 @@
                         <p class="mt-2">Check student volunteer rankings</p>
                     </a>
                     
-                    <a href="{{ route('admin.dashboard') }}" 
+                    <a href="{{ route('admin.users') }}" 
                        class="bg-green-500 hover:bg-green-600 text-white p-4 rounded-lg transition">
                         <h2 class="text-xl font-semibold">Manage Users</h2>
                         <p class="mt-2">Administer user accounts</p>
                     </a>
 
-                    <a href="{{ route('schools.create') }}" 
+                    <a href="{{ route('admin.schools.index') }}" 
                        class="bg-purple-500 hover:bg-purple-600 text-white p-4 rounded-lg transition">
-                        <h2 class="text-xl font-semibold">Create School</h2>
-                        <p class="mt-2">Add new schools to the system</p>
+                        <h2 class="text-xl font-semibold">Manage Schools</h2>
+                        <p class="mt-2">View and manage schools</p>
                     </a>
                 </div>
             </div>

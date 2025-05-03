@@ -11,7 +11,7 @@ class LeaderboardController extends Controller
     {
         $leaderboard = DB::table('leaderboard')
             ->join('users', 'leaderboard.student_id', '=', 'users.id')
-            ->select('users.first_name as name', 'leaderboard.total_hours') // Use 'first_name' instead of 'name'
+            ->select('users.first_name as name', 'leaderboard.total_hours') 
             ->orderByDesc('leaderboard.total_hours')
             ->get();
 

@@ -27,4 +27,14 @@ class Admin extends Authenticatable
     {
         return $this->admin_pass;
     }
+    
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return true; // All users in the Admin model are admins
+    }
 }
