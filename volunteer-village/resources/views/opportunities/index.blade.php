@@ -14,7 +14,7 @@
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                    <a class="nav-link" href="{{ auth()->user()->getHomeRoute() }}">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
@@ -27,11 +27,13 @@
                         <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
                     </li>
                 @endif
+                @if(auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('student.pending.hours') }}">Verify Service Hours</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('leaderboard') }}">Leaderboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Verify Service Hours</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
@@ -52,6 +54,7 @@
                                 <th>Location</th>
                                 <th>Max Students</th>
                                 <th>Description</th>
+                                <th>Picture</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -62,6 +65,13 @@
                                     <td>{{ $opportunity->Location }}</td>
                                     <td>{{ $opportunity->Max_students }}</td>
                                     <td>{{ $opportunity->Description }}</td>
+                                    <td>
+                                        @if($opportunity->picture)
+                                            <img src="{{ asset('storage/' . $opportunity->picture) }}" alt="{{ $opportunity->Name }}" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                                        @else
+                                            <span class="text-muted">No picture available</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\VolunteerOpportunity;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class OpportunityController extends Controller
 {
@@ -12,7 +13,7 @@ class OpportunityController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         // Fetch all opportunities from the database
         $opportunities = VolunteerOpportunity::all();

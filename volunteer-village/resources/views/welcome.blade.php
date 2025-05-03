@@ -86,8 +86,6 @@
             </form>
         </div>
 
-        <button id="toggleRegisterForm">New here? Click to register</button>
-
         <div class="form-box" id="registerForm" style="display: none;">
             <h2>Register</h2>
             <form action="{{ route('register') }}" method="POST">

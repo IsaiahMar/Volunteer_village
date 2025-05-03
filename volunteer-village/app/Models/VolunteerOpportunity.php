@@ -19,5 +19,15 @@ class VolunteerOpportunity extends Model
         'Location',
         'Max_students',
         'Description',
+        'picture'
     ];
+
+    protected $casts = [
+        'Date' => 'date'
+    ];
+
+    public function verifiedHours()
+    {
+        return $this->hasMany(VerifiedHour::class, 'opportunity_id');
+    }
 }
