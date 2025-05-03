@@ -50,6 +50,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
     Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->name('messages.get');
 });
 
 
@@ -84,10 +85,13 @@ Route::get('/dashboard', function () {
 
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+
+
+
 
 // profile routes
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');

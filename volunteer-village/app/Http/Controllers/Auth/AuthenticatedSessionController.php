@@ -41,9 +41,9 @@ class AuthenticatedSessionController extends Controller
 
         // Check if admin
         $admin = Admin::where('contact_info', $credentials['email'])->first();
-        if ($admin && \Illuminate\Support\Facades\Hash::check($credentials['password'], $admin->password)) {
+        if ($admin && Hash::check($credentials['password'], $admin->password)) {
             Auth::login($admin, $remember);
-            \Illuminate\Support\Facades\Session::put('is_admin', true);
+            Session::put('is_admin', true);
             $request->session()->regenerate();
             return redirect()->intended(route('admin.dashboard'));
         }
@@ -66,10 +66,9 @@ class AuthenticatedSessionController extends Controller
     {
         $credentials = $request->only('email', 'password');
         $remember = $request->boolean('remember');
-        
-        // For debugging, let's try a hardcoded admin user
+
+        // For debugging: hardcoded admin
         if ($credentials['email'] === 'admin@volunteervillage.com' && $credentials['password'] === 'Quack123!') {
-            // Create a new admin user if it doesn't exist
             $admin = Admin::firstOrCreate(
                 ['contact_info' => 'admin@volunteervillage.com'],
                 [
@@ -78,13 +77,13 @@ class AuthenticatedSessionController extends Controller
                     'admin_type' => 'Admin'
                 ]
             );
-            
+
             Auth::login($admin, $remember);
             Session::put('is_admin', true);
             $request->session()->regenerate();
             return redirect()->intended(route('admin.dashboard'));
         }
-        
+
         return back()->withErrors([
             'email' => trans('auth.failed'),
         ])->onlyInput('email');
@@ -93,13 +92,14 @@ class AuthenticatedSessionController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function logout(Request $request): RedirectResponse
-    {
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect('/login');
-    }
+    public function destroy(Request $request): RedirectResponse
+{
+    Auth::guard('web')->logout();
+
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    return redirect('/login');
 }
 
-
+}

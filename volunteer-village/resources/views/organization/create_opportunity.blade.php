@@ -20,6 +20,9 @@
                     <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('messages.index') }}">Messages</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
                 @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
