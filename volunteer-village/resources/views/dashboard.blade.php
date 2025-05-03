@@ -60,30 +60,42 @@
             @if($leaders->isNotEmpty())
                 <canvas id="confettiCanvas" style="position:absolute; top:180px; left:0; width:100%; height:200px; pointer-events:none;"></canvas>
             @endif
-
+            
             <div class="col-lg-6 mx-auto">
                 @foreach($leaders->values() as $index => $leader)
                     <div class="mb-3">
                         <div class="card shadow-sm d-flex flex-row align-items-center p-3 leader-animate delay-{{ $index + 1 }} {{ $index === 0 ? 'sparkle-king' : '' }}">
-                            <div class="mr-3 chess-icon">
+                            
+                            {{-- Chess Icon --}}
+                            <div class="mr-3 chess-icon" style="font-size: 24px;">
                                 @switch($index)
                                     @case(0) <span class="gold">♔</span> @break
                                     @case(1) <span class="silver">♕</span> @break
                                     @case(2) <span class="bronze">♖</span> @break
                                     @case(3) ♗ @break
                                     @case(4) ♘ @break
+                                    @default ♙
                                 @endswitch
                             </div>
+            
+                            {{-- Profile Picture & Name --}}
+                            <div class="d-flex align-items-center mr-3">
+                                <img src="{{ $leader->profile_photo_url }}"
+                                     alt="{{ $leader->first_name }}'s Profile Picture"
+                                     class="rounded-circle"
+                                     style="width: 40px; height: 40px; object-fit: cover;">
+                            </div>
+            
+                            {{-- Name & Hours --}}
                             <div class="flex-grow-1">
-                                <h5 class="mb-1">{{ $leader->name }}</h5>
+                                <h5 class="mb-1">{{ $leader->first_name }} {{ $leader->last_name }}</h5>
                                 <p class="mb-0 text-muted">{{ $leader->total_hours }} hours</p>
                             </div>
                         </div>
                     </div>
                 @endforeach
             </div>
-        </div>
-    </div>
+            
 
     <!-- Footer -->
     <footer class="bg-light text-center py-3" id="mainFooter">

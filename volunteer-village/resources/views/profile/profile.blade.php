@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 </head>
 
 <body>
@@ -63,11 +62,31 @@
             <h3>Email: {{ $user->email }}</h3>
             <h3>Role: {{ $user->role }}</h3>
 
+            <!-- Profile Photo -->
+            <div class="my-4">
+                <img src="{{ $user->profile_photo_url }}" alt="Profile Photo" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+            </div>
+
+            <!-- Upload Profile Photo Form -->
+            <div class="mb-4 p-4 bg-dark shadow rounded">
+                <form action="{{ route('profile.upload-photo') }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="form-group">
+                        <label for="photo" class="text-white">Upload New Profile Photo</label>
+                        <input type="file" class="form-control-file" name="profile_photo" accept="image/*" required>
+
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-2">Upload</button>
+                </form>
+            </div>
+
+            <!-- Update Profile Info -->
             <div class="mt-4 p-4 bg-dark shadow rounded">
                 @include('profile.partials.update-profile-information-form')
                 <button type="button" class="update-btn" style="display: none;">Update Profile</button>
             </div>
 
+            <!-- Update Password -->
             <div class="mt-4 p-4 bg-dark shadow rounded">
                 @include('profile.partials.update-password-form')
                 <button type="button" class="update-btn" style="display: none;">Update Password</button>
@@ -100,7 +119,7 @@
             footer.classList.toggle('shifted');
         });
 
-        // Auto-show buttons when user changes a field
+        // Auto-show buttons on input change
         document.querySelectorAll('form input, form select, form textarea').forEach(input => {
             input.addEventListener('input', () => {
                 const button = input.closest('form').nextElementSibling;

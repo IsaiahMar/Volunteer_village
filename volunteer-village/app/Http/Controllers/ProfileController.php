@@ -7,13 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
     public function edit(Request $request): View
     {
         return view('profile.edit', [
@@ -21,9 +19,6 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
@@ -37,9 +32,6 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
-    /**
-     * Delete the user's account.
-     */
     public function destroy(Request $request): RedirectResponse
     {
         $request->validateWithBag('userDeletion', [
@@ -49,9 +41,7 @@ class ProfileController extends Controller
         $user = $request->user();
 
         Auth::logout();
-
         $user->delete();
-
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
@@ -61,7 +51,33 @@ class ProfileController extends Controller
     public function show(): View
     {
         return view('profile.profile', [
-            'user' => Auth::user(), // Pass the authenticated user to the view
+            'user' => Auth::user(),
         ]);
+    }
+
+    // 🖼️ Add this for profile photo upload
+    public function uploadPhoto(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'profile_photo' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        $user = Auth::user();
+
+        if (!$user instanceof \App\Models\User) {
+            throw new \LogicException('Authenticated user is not an instance of the User model.');
+        }
+
+        // Delete old photo if exists
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
+        }
+
+        // Store new photo
+        $path = $request->file('profile_photo')->store('profile_photos', 'public');
+        $user->profile_photo_path = $path;
+        $user->save();
+
+        return redirect()->route('profile.show')->with('status', 'Profile photo updated.');
     }
 }
