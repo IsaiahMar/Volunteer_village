@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
@@ -30,10 +31,15 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        // Normalize email to lowercase before validating
+        $request->merge([
+            'email' => strtolower($request->email)
+        ]);
+
         $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'phone' => ['nullable', 'string', 'max:20'],
             'dateOfBirth' => ['nullable', 'date'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
@@ -49,13 +55,11 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
-        
+
         event(new Registered($user));
-        \Log::info('Registering user', $user->toArray());
+        Log::info('Registering user', $user->toArray());
         Auth::login($user);
 
-
-    return redirect(RouteServiceProvider::HOME);
-
+        return redirect(RouteServiceProvider::HOME);
     }
 }

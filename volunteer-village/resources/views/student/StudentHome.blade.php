@@ -30,7 +30,7 @@
                     <a class="nav-link" href="{{ route('student.messaging') }}">Personal Messaging</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.opportunity.board') }}">Opportunity Board</a>
+                    <a class="nav-link" href="{{ route('opportunities.index') }}">Opportunity Board</a>
                 </li>
                 <li class="nav-item">
                     <form action="{{ route('student.logout') }}" method="POST" style="display: inline;">

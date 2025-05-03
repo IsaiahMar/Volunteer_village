@@ -43,6 +43,12 @@ class User extends Authenticatable
         });
     }
 
+
+    public function opportunities()
+{
+    return $this->hasMany(VolunteerOpportunity::class, 'organization_id', 'id');
+}
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -95,5 +101,21 @@ class User extends Authenticatable
     public function volunteerHours()
     {
         return $this->hasMany(VolunteerHour::class, 'Student_ID', 'student_id');
+    }
+
+    public function getHomeRoute()
+    {
+        switch ($this->role) {
+            case 'student':
+                return route('student.home');
+            case 'teacher':
+                return route('teacher.home');
+            case 'organization':
+                return route('organization.home');
+            case 'admin':
+                return route('admin.dashboard');
+            default:
+                return route('dashboard');
+        }
     }
 }

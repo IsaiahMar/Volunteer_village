@@ -17,7 +17,8 @@ class VerifiedHour extends Model
         'hours',
         'status',
         'description',
-        'date'
+        'date',
+        'picture'
     ];
 
     public function user()

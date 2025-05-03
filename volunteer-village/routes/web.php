@@ -7,11 +7,16 @@ use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\TeacherController;
+// use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\OrganizationOpportunityController;
 use App\Http\Livewire\Messaging;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\LeaderboardController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,13 +43,33 @@ Route::middleware(['auth'])->group(function () {
 
 // [Rest of your existing routes remain unchanged...]
 // view opportunities
-Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
+});
 
-// messaging routes
-Route::get('/messaging', \App\Http\Controllers\MessagingController::class)->name('messaging');
+// //messaging routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
+    Route::delete('/messages/{id}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    Route::get('/messages/{userId}', [MessageController::class, 'getMessages'])->name('messages.get');
+});
+
 
 // organization routes
 Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
+
+Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
+    Route::get('/opportunities', [OrganizationOpportunityController::class, 'index'])->name('opportunities.index');
+    Route::put('/opportunities/{id}', [OrganizationOpportunityController::class, 'update'])->name('opportunities.update');
+    Route::delete('/opportunities/{id}', [OrganizationOpportunityController::class, 'destroy'])->name('opportunities.destroy');
+    Route::get('/opportunities/create', [OrganizationOpportunityController::class, 'create'])->name('createOpportunity');
+    Route::post('/opportunities', [OrganizationOpportunityController::class, 'store'])->name('storeOpportunity');
+});
+
+
+
+// Protected organization routes
 Route::middleware('auth')->group(function () {
     Route::get('/organization/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('organization.createOpportunity');
     Route::post('/organization/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('organization.storeOpportunity');
@@ -55,6 +80,9 @@ Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.
 
 // dashboard and auth routes
 Route::get('/dashboard', function () {
+    if (auth()->user()->role === 'student') {
+        return redirect()->route('student.home');
+    }
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
@@ -62,10 +90,13 @@ Route::get('/dashboard', function () {
 
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
-Route::post('/logout', [AuthenticatedSessionController::class, 'logout'])->name('logout');
+Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('register', [RegisteredUserController::class, 'store']);
+
+
+
+
 
 // profile routes
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -109,7 +140,13 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
     Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
     Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
-
+    
+    // Service hours approval routes
+    Route::middleware(['auth', 'role:teacher,admin'])->group(function () {
+        Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
+        Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
+    });
+});
 
 });
 

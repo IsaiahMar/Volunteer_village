@@ -88,17 +88,27 @@ class OrganizationController extends Controller
             'Location' => 'required|string|max:255',
             'Max_students' => 'required|integer',
             'Description' => 'nullable|string',
+            'picture' => 'nullable|image|max:15360' // 15MB max
         ]);
     
-        VolunteerOpportunity::create([
+        $opportunity = new VolunteerOpportunity([
             'Name' => $request->Name,
             'Date' => $request->Date,
             'Location' => $request->Location,
             'Max_students' => $request->Max_students,
             'Description' => $request->Description,
         ]);
+
+        if ($request->hasFile('picture')) {
+            $picture = $request->file('picture');
+            $filename = time() . '_' . $picture->getClientOriginalName();
+            $picture->storeAs('public/opportunity_pictures', $filename);
+            $opportunity->picture = 'opportunity_pictures/' . $filename;
+        }
+
+        $opportunity->save();
     
-        return redirect()->route('organization.home')->with('success', 'Volunteer opportunity created successfully.');
+        return redirect()->route('organization.createOpportunity')->with('success', 'Volunteer opportunity created successfully.');
     }
 
     public function viewOpportunities()
