@@ -12,6 +12,8 @@ class OrganizationOpportunityController extends Controller
         return view('organization.your_opportunities', compact('opportunities'));
     }
 
+ 
+
     public function edit($id)
     {
         $opportunity = VolunteerOpportunity::where('id', $id)
