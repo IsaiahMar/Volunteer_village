@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('volunteer_opportunities', function (Blueprint $table) {
-            $table->string('picture')->nullable()->after('Description');
+        Schema::table('verified_hours', function (Blueprint $table) {
+            $table->text('rejection_reason')->nullable()->after('status');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('volunteer_opportunities', function (Blueprint $table) {
-            $table->dropColumn('picture');
+        Schema::table('verified_hours', function (Blueprint $table) {
+            $table->dropColumn('rejection_reason');
         });
     }
-}; 
+};
