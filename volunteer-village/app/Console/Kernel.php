@@ -12,7 +12,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        // THIS is where your scheduled command should go:
+        $schedule->command('leaderboard:reset')->monthlyOn(1, '00:00');
     }
 
     /**

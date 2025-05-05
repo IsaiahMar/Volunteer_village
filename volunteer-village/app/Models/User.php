@@ -13,8 +13,6 @@ class User extends Authenticatable
 
     /**
      * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
      */
     protected $fillable = [
         'first_name',
@@ -24,10 +22,9 @@ class User extends Authenticatable
         'dateOfBirth',
         'password',
         'role',
-        'phone',
-        'dateOfBirth',
         'student_id',
-        'teacher_id'
+        'teacher_id',
+        'profile_photo_path', // ✅ allow profile photo uploads
     ];
 
     protected static function boot()
@@ -43,10 +40,13 @@ class User extends Authenticatable
         });
     }
 
+    public function opportunities()
+    {
+        return $this->hasMany(VolunteerOpportunity::class, 'organization_id', 'id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
      */
     protected $hidden = [
         'password',
@@ -55,47 +55,41 @@ class User extends Authenticatable
 
     /**
      * The attributes that should be cast.
-     *
-     * @var array<string, string>
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * Check if the user is an admin.
-     *
-     * @return bool
-     */
     public function isAdmin()
     {
         return $this->role === 'admin';
     }
 
-    /**
-     * Check if the user is a teacher.
-     *
-     * @return bool
-     */
     public function isTeacher()
     {
-        return $this->role === 'teacher'; 
+        return $this->role === 'teacher';
     }
 
-    /**
-     * Check if the user is an organization.
-     *
-     * @return bool
-     */
     public function isOrganization()
     {
-        return $this->role === 'organization'; 
+        return $this->role === 'organization';
     }
 
     public function volunteerHours()
     {
         return $this->hasMany(VolunteerHour::class, 'Student_ID', 'student_id');
     }
+
+    /**
+     * Accessor to get the full profile photo URL.
+     */
+    public function getProfilePhotoUrlAttribute()
+    {
+        return $this->profile_photo_path
+            ? asset('storage/' . $this->profile_photo_path)
+            : asset('images/default.jpg');
+    }
+}
 
     public function getHomeRoute()
     {

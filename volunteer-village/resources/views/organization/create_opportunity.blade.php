@@ -1,4 +1,3 @@
-{{-- filepath: c:\Users\kisha\OneDrive\Desktop\CapStone\Volunteer_village\volunteer-village\resources\views\organization\create_opportunity.blade.php --}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +20,9 @@
                     <a class="nav-link" href="{{ route('profile.show') }}">Profile</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('messages.index') }}">Messages</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('opportunities.index') }}">View Opportunities</a>
                 </li>
                 @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
@@ -35,16 +37,24 @@
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li> --}}
                 {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
-                </li> --}}
-                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('settings') }}">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-danger text-white w-100 mt-2" style="border: none; border-radius: 5px;">
+                            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
         <div class="container mt-5" style="margin-left: 270px;">
             <h1>Create Volunteer Opportunity</h1>
-            <form action="{{ route('organization.storeOpportunity') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('organization.storeOpportunity') }}" method="POST">
                 @csrf
                 <div class="form-group">
                     <label for="Name">Name</label>
@@ -66,23 +76,9 @@
                     <label for="Description">Description</label>
                     <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
                 </div>
-                <div class="form-group">
-                    <label for="picture">Upload Picture (Optional)</label>
-                    <input type="file" class="form-control-file" id="picture" name="picture" accept="image/*">
-                    <small class="form-text text-muted">Upload a picture of the volunteer location (max 5MB)</small>
-                </div>
-                <div class="form-group mt-4">
-                    <button type="submit" class="btn btn-primary btn-lg" style="width: 200px;">Create Opportunity</button>
-                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>
     </div>
-    <footer class="bg-light text-center py-3 mt-auto">
-        <p>&copy; 2025 Volunteer Village. All rights reserved.</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="/js/footer.js"></script>
-</body>
-</html>
+</div>
+@endsection
