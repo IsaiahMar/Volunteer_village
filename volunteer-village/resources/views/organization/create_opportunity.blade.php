@@ -37,11 +37,19 @@
                     <a class="nav-link" href="#">Verify Service Hours</a>
                 </li> --}}
                 {{-- <li class="nav-item">
-                    <a class="nav-link" href="{{ route('messaging') }}">Personal Messaging</a>
-                </li> --}}
-                {{-- <li class="nav-item">
                     <a class="nav-link" href="#">View Feedback from Students</a>
                 </li> --}}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('settings') }}">Settings</a>
+                </li>
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-danger text-white w-100 mt-2" style="border: none; border-radius: 5px;">
+                            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
         <div class="container mt-5" style="margin-left: 270px;">
