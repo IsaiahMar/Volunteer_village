@@ -59,6 +59,8 @@ Route::middleware('auth')->group(function () {
 // Teacher
 Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
 
+// End of teacher routes
+
 // Dashboard (uses Eloquent)
 Route::get('/dashboard', function () {
     $leaders = User::join('leaderboard', 'users.id', '=', 'leaderboard.student_id')
@@ -70,11 +72,15 @@ Route::get('/dashboard', function () {
     return view('dashboard', compact('leaders'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+// End of dashboard routes
+
 // Auth
 Route::get('/login', [AuthenticatedSessionController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthenticatedSessionController::class, 'login']);
 Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 Route::post('register', [RegisteredUserController::class, 'store']);
+
+// End of auth routes
 
 // Profile
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -84,6 +90,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile/photo', [ProfileController::class, 'uploadPhoto'])->name('profile.upload-photo');
 });
+
+//  End of profile routes
 
 // Admin
 Route::middleware(['web'])->group(function () {
@@ -107,6 +115,8 @@ Route::middleware(['web'])->group(function () {
     });
 });
 
+// End of admin routes
+
 // Student
 Route::prefix('student')->name('student.')->group(function () {
     Route::get('/home', [StudentController::class, 'home'])->name('home');
@@ -118,6 +128,21 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
     Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
 });
+
+// end of student routes
+
+// Settings routes
+Route::get('/settings', function () {
+    return view('settings');
+})->middleware('auth')->name('settings');
+
+Route::post('/toggle-darkmode', function () {
+    $current = session('dark_mode', false);
+    session(['dark_mode' => !$current]);
+    return back();
+})->name('toggle.darkmode');
+
+// End of settings routes
 
 // Leaderboard (uses Eloquent)
 Route::get('/leaderboard', function () {

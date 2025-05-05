@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
-<body>
+<body class="{{ session('dark_mode') ? 'dark-mode' : '' }}">
     <!-- Toggle Sidebar Button -->
     <button class="toggle-btn" id="toggleSidebar">
         <i class="fas fa-bars"></i>
@@ -31,6 +31,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('organization.createOpportunity') }}"><i class="fas fa-plus"></i> <span>Create Opportunities</span></a></li>
                 @endif
                 <li class="nav-item"><a class="nav-link" href="{{ route('leaderboard') }}"><i class="fas fa-trophy"></i> <span>Leaderboard</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('settings') }}"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
@@ -55,7 +56,7 @@
             </ul>
 
             <!-- Volunteer Leaders Section -->
-            <h2 class="mt-5 mb-4">Volunteer Leaders</h2>
+            <h2 class="mt-5 mb-4 text-center">Current Volunteer Leaders</h2>
 
             @if($leaders->isNotEmpty())
                 <canvas id="confettiCanvas" style="position:absolute; top:180px; left:0; width:100%; height:200px; pointer-events:none;"></canvas>

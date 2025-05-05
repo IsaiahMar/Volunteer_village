@@ -59,16 +59,21 @@ ul li:nth-child(odd) {
 /* Sidebar */
 .sidebar {
     width: 250px;
-    min-height: 100vh;
+    height: 100vh;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #d0ebff; /* light blue sidebar */
+    background-color: #d0ebff; /* light blue */
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    
+    /* 🔥 Make it scrollable */
     overflow-y: auto;
-    transition: all 0.3s ease;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
+
 .sidebar.collapsed {
     width: 70px;
     padding: 20px 10px;
@@ -83,6 +88,7 @@ ul li:nth-child(odd) {
     height: auto;
     margin-bottom: 20px;
     transition: all 0.3s ease;
+    object-fit: contain;
 }
 .sidebar.collapsed .logo {
     max-width: 50px;
@@ -119,8 +125,9 @@ ul li:nth-child(odd) {
 .wrapper {
     display: flex;
     height: 100vh;
-    overflow: hidden;
+    overflow: hidden; /* Or just remove this line entirely */
 }
+
 
 /* Content */
 .content {
@@ -283,6 +290,5 @@ footer.shifted {
             0 0 20px rgba(255, 215, 0, 0.4);
     }
 }
-
 
 

@@ -42,10 +42,10 @@
         <i class="fas fa-bars"></i>
     </button>
 
-    <div class="wrapper">
+    <div class="wrapper d-flex justify-content-center align-items-center flex-column">
         <!-- Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
+        <div class="sidebar text-center" id="sidebar">
+            <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo mx-auto">
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
@@ -80,13 +80,25 @@
                         <i class="fas fa-trophy"></i> <span>Leaderboard</span>
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link" href="{{ route('settings') }}" data-toggle="tooltip" title="Settings">
+                        <i class="fas fa-cog"></i> <span>Settings</span>
+                </li>
+                <li class="nav-item">
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="nav-link btn btn-danger text-white w-100 mt-2" style="border: none; border-radius: 5px;">
+                            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                        </button>
+                    </form>
+                </li>
             </ul>
         </div>
 
         <!-- Main Content -->
-        <div class="content" id="mainContent">
+        <div class="content text-center" id="mainContent">
             <h1>Leaderboard</h1>
-            <table class="table table-bordered leaderboard-table">
+            <table class="table table-bordered leaderboard-table mx-auto" style="max-width: 800px;">
                 <thead>
                     <tr>
                         <th><i class="fas fa-ranking-star text-warning mr-1"></i> Rank</th>
@@ -106,7 +118,7 @@
                                     @default {{ $index + 1 }}
                                 @endswitch
                             </td>                            
-                            <td class="d-flex align-items-center gap-2">
+                            <td class="d-flex align-items-center justify-content-center gap-2">
                                 <img src="{{ $student->profile_photo_url }}"
                                      alt="{{ $student->first_name }}'s profile photo"
                                      class="rounded-circle mr-2"
