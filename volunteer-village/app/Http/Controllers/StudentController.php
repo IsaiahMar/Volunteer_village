@@ -68,6 +68,7 @@ class StudentController extends Controller
             'hours' => 'required|numeric|min:0.5',
             'date' => 'required|date',
             'description' => 'required|string',
+            'picture' => 'nullable|image|max:5120' // 5MB max
         ]);
 
         $verifiedHour = new VerifiedHour([
@@ -78,6 +79,13 @@ class StudentController extends Controller
             'description' => $request->description,
             'status' => 'pending'
         ]);
+
+        if ($request->hasFile('picture')) {
+            $picture = $request->file('picture');
+            $filename = time() . '_' . $picture->getClientOriginalName();
+            $picture->storeAs('public/volunteer_pictures', $filename);
+            $verifiedHour->picture = 'volunteer_pictures/' . $filename;
+        }
 
         $verifiedHour->save();
 
@@ -113,5 +121,42 @@ class StudentController extends Controller
     public function opportunityBoard(): View
     {
         return view('student.opportunity_board');
+    }
+
+    /**
+     * Display pending service hours for approval.
+     */
+    public function pendingHours(): View
+    {
+        $pendingHours = VerifiedHour::where('status', 'pending')
+            ->with(['user', 'opportunity'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('student.pending_hours', [
+            'pendingHours' => $pendingHours
+        ]);
+    }
+
+    /**
+     * Approve or reject service hours.
+     */
+    public function updateHoursStatus(Request $request, $id)
+    {
+        $request->validate([
+            'status' => 'required|in:verified,rejected',
+            'rejection_reason' => 'required_if:status,rejected|nullable|string'
+        ]);
+
+        $verifiedHour = VerifiedHour::findOrFail($id);
+        $verifiedHour->status = $request->status;
+        
+        if ($request->status === 'rejected' && $request->has('rejection_reason')) {
+            $verifiedHour->rejection_reason = $request->rejection_reason;
+        }
+
+        $verifiedHour->save();
+
+        return redirect()->back()->with('success', 'Service hours status updated successfully.');
     }
 }

@@ -57,7 +57,7 @@
 
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('student.submit.hours.store') }}" method="POST">
+                    <form action="{{ route('student.submit.hours.store') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         
                         <div class="form-group">
@@ -83,6 +83,12 @@
                         <div class="form-group">
                             <label for="description">Description</label>
                             <textarea class="form-control" id="description" name="description" rows="3" placeholder="Describe what you did during your volunteer service..." required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="picture">Upload Picture</label>
+                            <input type="file" class="form-control-file" id="picture" name="picture" accept="image/*">
+                            <small class="form-text text-muted">Upload a picture of your volunteer work (max 5MB)</small>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit Hours</button>

@@ -28,8 +28,13 @@ Route::middleware(['auth'])->group(function () {
         ->middleware('can:approve,school');
 });
 
+
 // Opportunities
-Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
+// view opportunities
+Route::middleware(['auth'])->group(function () {
+    Route::get('/opportunities', [OpportunityController::class, 'index'])->name('opportunities.index');
+});
+
 
 // Messaging
 Route::middleware(['auth'])->group(function () {
@@ -68,6 +73,7 @@ Route::get('/dashboard', function () {
         ->orderByDesc('leaderboard.total_hours')
         ->limit(5)
         ->get();
+
 
     return view('dashboard', compact('leaders'));
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -127,6 +133,7 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/your-hours', [StudentController::class, 'yourHours'])->name('your.hours');
     Route::get('/messaging', [StudentController::class, 'messaging'])->name('messaging');
     Route::get('/opportunity-board', [StudentController::class, 'opportunityBoard'])->name('opportunity.board');
+
 });
 
 // end of student routes
@@ -154,6 +161,20 @@ Route::get('/leaderboard', function () {
 
     return view('leaderboard', compact('leaderboard'));
 })->middleware('auth')->name('leaderboard');
+
+    
+    // Service hours approval routes
+    Route::middleware(['auth', 'role:teacher,admin'])->group(function () {
+        Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
+        Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
+    });
+});
+
+
+// leaderboard (moved outside student group)
+Route::get('/leaderboard', [LeaderboardController::class, 'index'])
+    ->name('leaderboard')
+    ->middleware('auth');
 
 require __DIR__.'/auth.php';
 

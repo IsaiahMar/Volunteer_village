@@ -90,3 +90,20 @@ class User extends Authenticatable
             : asset('images/default.jpg');
     }
 }
+
+    public function getHomeRoute()
+    {
+        switch ($this->role) {
+            case 'student':
+                return route('student.home');
+            case 'teacher':
+                return route('teacher.home');
+            case 'organization':
+                return route('organization.home');
+            case 'admin':
+                return route('admin.dashboard');
+            default:
+                return route('dashboard');
+        }
+    }
+}

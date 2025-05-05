@@ -62,12 +62,14 @@
 <body>
     <div class="container">
         <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
+
         <h1>Welcome to Volunteer Village</h1>
 
         <div>
             <a href="{{ route('login') }}" class="btn">Login</a>
             <a href="{{ route('register') }}" class="btn">Register</a>
             <a href="{{ route('admin.login') }}" class="btn">Admin Login</a>
+
         </div>
     </div>
 </body>

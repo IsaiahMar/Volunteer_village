@@ -24,9 +24,11 @@
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
+
                     <a class="nav-link" href="{{ route('dashboard') }}" data-toggle="tooltip" title="Dashboard">
                         <i class="fas fa-home"></i> <span>Dashboard</span>
                     </a>
+
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('profile.show') }}" data-toggle="tooltip" title="Profile">
@@ -38,6 +40,18 @@
                         <i class="fas fa-envelope"></i> <span>Messages</span>
                     </a>
                 </li>
+
+                @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('organization.createOpportunity') }}">Create Opportunities</a>
+                    </li>
+                @endif
+                @if(auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('student.pending.hours') }}">Verify Service Hours</a>
+                    </li>
+                @endif
+
                 <li class="nav-item">
                     <a class="nav-link active" href="{{ route('opportunities.index') }}" data-toggle="tooltip" title="View Opportunities">
                         <i class="fas fa-search"></i> <span>Opportunities</span>
@@ -45,6 +59,8 @@
                 </li>
                 @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
                 <li class="nav-item">
+
+                    <a class="nav-link" href="#">View Feedback from Students</a>
                     <a class="nav-link" href="{{ route('organization.createOpportunity') }}" data-toggle="tooltip" title="Create Opportunities">
                         <i class="fas fa-plus"></i> <span>Create</span>
                     </a>
@@ -130,6 +146,7 @@
                                 <th>Location</th>
                                 <th>Max Students</th>
                                 <th>Description</th>
+                                <th>Picture</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -140,6 +157,13 @@
                                     <td>{{ $opportunity->Location }}</td>
                                     <td>{{ $opportunity->Max_students }}</td>
                                     <td>{{ $opportunity->Description }}</td>
+                                    <td>
+                                        @if($opportunity->picture)
+                                            <img src="{{ asset('storage/' . $opportunity->picture) }}" alt="{{ $opportunity->Name }}" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+                                        @else
+                                            <span class="text-muted">No picture available</span>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
