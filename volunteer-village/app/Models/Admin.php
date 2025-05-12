@@ -22,6 +22,7 @@ class Admin extends Authenticatable
 
     protected $hidden = [
         'admin_pass',
+        'remember_token',
     ];
 
     protected $casts = [

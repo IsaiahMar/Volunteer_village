@@ -1,79 +1,70 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-md w-full space-y-8">
-        <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
-                Admin Portal
-            </h2>
-            <p class="mt-2 text-center text-sm text-gray-600">
-                Please sign in to access the admin dashboard
-            </p>
+<style>
+    body {
+        background: linear-gradient(120deg, #7f53ac 0%, #657ced 50%, #f95794 100%);
+        min-height: 100vh;
+    }
+</style>
+<div class="min-h-screen flex items-center justify-center" style="background: linear-gradient(120deg, #7f53ac 0%, #657ced 50%, #f95794 100%);">
+    <div class="w-full max-w-4xl bg-white bg-opacity-80 rounded-2xl shadow-2xl flex overflow-hidden">
+        <!-- Left: Welcome -->
+        <div class="w-1/2 p-10 flex flex-col justify-center items-start bg-gradient-to-br from-indigo-600 via-purple-500 to-pink-400 text-white">
+            <h1 class="text-4xl font-bold mb-4 drop-shadow-lg">Welcome to Admin Portal</h1>
+            <p class="mb-8 text-lg opacity-90">Sign in to manage Volunteer Village. Please use your admin credentials to access the dashboard and manage users, schools, and more.</p>
+            <img src="{{ asset('images/Logo.png') }}" alt="Volunteer Village Logo" class="h-24 w-auto mt-auto opacity-90">
         </div>
-        <form class="mt-8 space-y-6" method="POST" action="{{ route('admin.login.submit') }}">
-            @csrf
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                    <label for="email" class="sr-only">Email address</label>
-                    <input id="email" name="email" type="email" required 
-                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
-                        placeholder="Email address">
+        <!-- Right: Login Form -->
+        <div class="w-1/2 p-10 flex flex-col justify-center">
+            <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">USER LOGIN</h2>
+            <form class="space-y-6" method="POST" action="{{ route('admin.login.submit') }}">
+                @csrf
+                <!-- Email -->
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-indigo-400">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 12A4 4 0 1 1 8 12a4 4 0 0 1 8 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14v7m0 0H9m3 0h3"/></svg>
+                    </span>
+                    <input id="email" name="email" type="email" required placeholder="Email address"
+                        class="pl-10 pr-4 py-3 w-full rounded-full border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 text-gray-700 bg-white shadow-sm @error('email') border-red-500 @enderror"
+                        value="{{ old('email') }}">
+                    @error('email')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
-                <div>
-                    <label for="password" class="sr-only">Password</label>
-                    <input id="password" name="password" type="password" required 
-                        class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
-                        placeholder="Password">
+                <!-- Password -->
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-indigo-400">
+                        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M17 21v-2a4 4 0 0 0-8 0v2"/></svg>
+                    </span>
+                    <input id="password" name="password" type="password" required placeholder="Password"
+                        class="pl-10 pr-4 py-3 w-full rounded-full border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 text-gray-700 bg-white shadow-sm @error('password') border-red-500 @enderror">
+                    @error('password')
+                        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
-            </div>
-
-            <div class="flex items-center justify-between">
-                <div class="flex items-center">
-                    <input id="remember" name="remember" type="checkbox" 
-                        class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                    <label for="remember" class="ml-2 block text-sm text-gray-900">
-                        Remember me
+                <!-- Remember & Forgot -->
+                <div class="flex items-center justify-between text-sm">
+                    <label class="flex items-center">
+                        <input id="remember" name="remember" type="checkbox" class="rounded text-indigo-600 border-gray-300 focus:ring-indigo-500">
+                        <span class="ml-2 text-gray-700">Remember</span>
                     </label>
+                    <a href="#" class="text-indigo-500 hover:underline">Forgot password?</a>
                 </div>
-            </div>
-
-            @if($errors->any())
-                <div class="rounded-md bg-red-50 p-4">
-                    <div class="flex">
-                        <div class="ml-3">
-                            <h3 class="text-sm font-medium text-red-800">
-                                Authentication failed
-                            </h3>
-                            <div class="mt-2 text-sm text-red-700">
-                                <ul class="list-disc pl-5 space-y-1">
-                                    @foreach($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
+                <!-- Error Messages -->
+                @if($errors->any())
+                    <div class="rounded-md bg-red-50 p-3">
+                        <div class="flex items-center">
+                            <svg class="h-5 w-5 text-red-400 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                            <span class="text-sm text-red-700">Authentication failed. Please check your credentials.</span>
                         </div>
                     </div>
-                </div>
-            @endif
-
-            <div>
-                <button type="submit" 
-                    class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-                        <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
-                    Sign in
+                @endif
+                <!-- Login Button -->
+                <button type="submit">
+                    LOGIN
                 </button>
-            </div>
-        </form>
-
-        <div class="text-center">
-            <a href="{{ route('login') }}" class="font-medium text-indigo-600 hover:text-indigo-500">
-                Back to regular login
-            </a>
+            </form>
         </div>
     </div>
 </div>

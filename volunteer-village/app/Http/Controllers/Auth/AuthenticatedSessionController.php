@@ -54,19 +54,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function adminLogin(Request $request): RedirectResponse
     {
-        $credentials = $request->only('email', 'password');
-        $remember = $request->boolean('remember');
+        $credentials = $request->validate([
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
+        ]);
 
         if (Auth::guard('admin')->attempt([
             'contact_info' => $credentials['email'],
-            'password' => $credentials['password']
-        ], $remember)) {
+            'admin_pass' => $credentials['password']
+        ], $request->boolean('remember'))) {
             $request->session()->regenerate();
             return redirect()->intended(route('admin.dashboard'));
         }
 
         return back()->withErrors([
-            'email' => trans('auth.failed'),
+            'email' => 'The provided credentials do not match our records.',
         ])->onlyInput('email');
     }
 
