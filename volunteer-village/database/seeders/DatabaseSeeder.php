@@ -18,6 +18,5 @@ class DatabaseSeeder extends Seeder
         $this->call(StudentSeeder::class);
         $this->call(LeaderboardSeeder::class); // Add LeaderboardSeeder
         $this->call(VolunteerOpportunitySeeder::class);
-        $this->call(AdminUserSeeder::class);
     }
 }
