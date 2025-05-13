@@ -29,10 +29,10 @@
                     <a class="nav-link" href="{{ route('student.submit.hours') }}"><i class="fas fa-clock"></i> <span>Submit Hours</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.your.hours') }}"><i class="fas fa-award"></i> <span>Your Hours</span></a>
+                    <a class="nav-link" href="{{ route('opportunities.index') }}"><i class="fas fa-search"></i> <span>Opportunities</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('opportunities.index') }}"><i class="fas fa-search"></i> <span>Opportunities</span></a>
+                    <a class="nav-link" href="{{ route('messages.index') }}"><i class="fas fa-envelope"></i> <span>Messages</span></a>
                 </li>
                 <li class="nav-item">
                     <form action="{{ route('student.logout') }}" method="POST">
