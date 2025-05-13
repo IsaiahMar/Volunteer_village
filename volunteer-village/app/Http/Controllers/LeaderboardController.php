@@ -19,7 +19,7 @@ class LeaderboardController extends Controller
                 // Generate the profile photo URL or use a default image
                 $user->profile_photo_url = $user->profile_photo_path 
                     ? Storage::url($user->profile_photo_path) 
-                    : asset('images/default-profile.png');
+                    : asset('images/default.jpg'); // Updated to use default.jpg
                 return $user;
             });
 
