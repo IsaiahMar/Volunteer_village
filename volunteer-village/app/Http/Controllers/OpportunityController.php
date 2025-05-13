@@ -12,13 +12,13 @@ class OpportunityController extends Controller
      * Display a listing of all volunteer opportunities.
      *
      * @param \Illuminate\Http\Request $request
+
      * @return \Illuminate\View\View
      */
     public function index(Request $request): View
     {
         $query = VolunteerOpportunity::query();
 
-        // Apply filters if provided in the request
         if ($request->filled('name')) {
             $query->where('Name', 'LIKE', '%' . $request->name . '%');
         }
@@ -38,8 +38,6 @@ class OpportunityController extends Controller
         // Fetch filtered opportunities and distinct locations
         $opportunities = $query->get();
         $locations = VolunteerOpportunity::select('Location')->distinct()->pluck('Location');
-
-        // Return the view with the opportunities and locations data
         return view('opportunities.index', compact('opportunities', 'locations'));
     }
 }

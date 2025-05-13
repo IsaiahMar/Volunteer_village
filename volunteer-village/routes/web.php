@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
 
 // Teacher
 Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
+Route::get('/student/pending-hours', [StudentController::class, 'pendingHours'])->name('student.pending.hours');
 
 // End of teacher routes
 
