@@ -11,7 +11,8 @@ class OpportunityController extends Controller
     /**
      * Display a listing of all volunteer opportunities.
      *
-     * @param Request $request
+     * @param \Illuminate\Http\Request $request
+
      * @return \Illuminate\View\View
      */
     public function index(Request $request): View
@@ -34,9 +35,9 @@ class OpportunityController extends Controller
             $query->whereDate('Date', '<=', $request->date_to);
         }
 
+        // Fetch filtered opportunities and distinct locations
         $opportunities = $query->get();
         $locations = VolunteerOpportunity::select('Location')->distinct()->pluck('Location');
-
         return view('opportunities.index', compact('opportunities', 'locations'));
     }
 }
