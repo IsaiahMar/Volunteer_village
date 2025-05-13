@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Home - Volunteer Village</title>
+    <title>Student Profile - Volunteer Village</title>
     <link rel="stylesheet" href="{{ asset('css/StudentHome.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -43,42 +43,51 @@
 
         <!-- Main Content -->
         <div class="content">
-            <h1>Student Home</h1>
+            <h1>Student Profile</h1>
             
-            <!-- Hour Counter -->
             <div class="card mb-4">
                 <div class="card-body">
-                    <h2>Total Hours This Month</h2>
-                    <p class="display-4">{{ $verifiedHours->sum('hours') }} Hours</p>
-                </div>
-            </div>
-
-            <h2>Impact Stream</h2>
-            <div class="row">
-                <!-- Hardcoded Post -->
-                <div class="col-md-6 mb-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h3>Helping with youth baseball coaching!</h3>
-                            <img src="{{ asset('storage/pictures/volunteer.jpeg') }}" alt="Volunteer Coaching!" class="img-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="text-center">
+                                <img src="{{ asset('images/default-avatar.png') }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="width: 150px; height: 150px; object-fit: cover;">
+                                <h3>{{ $student->first_name }} {{ $student->last_name }}</h3>
+                                <p class="text-muted">{{ $student->email }}</p>
+                            </div>
                         </div>
-                    </div>
-                </div>
-
-                @foreach($verifiedHours as $hour)
-                    <div class="col-md-6 mb-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h3>{{ $hour->opportunity->name ?? 'Volunteer Service' }}</h3>
-                                <p><strong>Hours:</strong> {{ $hour->hours }}</p>
-                                <p><strong>Date:</strong> {{ $hour->date }}</p>
-                                @if($hour->description)
-                                    <p><strong>Description:</strong> {{ $hour->description }}</p>
-                                @endif
+                        <div class="col-md-8">
+                            <h4>Personal Information</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Phone:</strong> {{ $student->phone ?? 'Not provided' }}</p>
+                                    <p><strong>Date of Birth:</strong> {{ $student->date_of_birth ? $student->date_of_birth->format('m/d/Y') : 'Not provided' }}</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Student ID:</strong> {{ $student->student_id ?? 'Not provided' }}</p>
+                                    <p><strong>Role:</strong> {{ ucfirst($student->role) }}</p>
+                                </div>
+                            </div>
+                            
+                            <h4 class="mt-4">Account Information</h4>
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Email Verified:</strong> 
+                                        @if($student->email_verified_at)
+                                            <span class="text-success">Yes</span>
+                                        @else
+                                            <span class="text-danger">No</span>
+                                        @endif
+                                    </p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Account Created:</strong> {{ $student->created_at->format('m/d/Y') }}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -92,4 +101,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
-</html>
+</html> 

@@ -97,12 +97,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/photo', [ProfileController::class, 'uploadPhoto'])->name('profile.upload-photo');
 });
 
-//  End of profile routes
-
-// Admin
-Route::middleware(['web'])->group(function () {
+// admin routes
+Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin'])->name('admin.login');
     Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login.submit');
+
 
     Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -118,12 +117,29 @@ Route::middleware(['web'])->group(function () {
             'update' => 'admin.schools.update',
             'destroy' => 'admin.schools.destroy',
         ]);
+
 });
 
-// End of admin routes
+Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
+    
+    // Schools routes
+    Route::resource('schools', AdminController::class)->names([
+        'index' => 'schools.index',
+        'create' => 'schools.create',
+        'store' => 'schools.store',
+        'edit' => 'schools.edit',
+        'update' => 'schools.update',
+        'destroy' => 'schools.destroy',
+    ]);
+});
 
-// Student
-Route::prefix('student')->name('student.')->group(function () {
+// Group student-specific routes
+Route::middleware(['auth'])->prefix('student')->name('student.')->group(function () {
     Route::get('/home', [StudentController::class, 'home'])->name('home');
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
     Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
@@ -163,11 +179,11 @@ Route::get('/leaderboard', function () {
 
     
     // Service hours approval routes
-    Route::middleware(['auth', 'role:teacher,admin'])->group(function () {
+    Route::middleware(['role:teacher,admin'])->group(function () {
         Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
         Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
     });
-});
+
 
 
 // leaderboard (moved outside student group)

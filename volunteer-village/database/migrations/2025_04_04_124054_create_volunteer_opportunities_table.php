@@ -15,11 +15,13 @@ class CreateVolunteerOpportunitiesTable extends Migration
     {
         Schema::create('volunteer_opportunities', function (Blueprint $table) {
             $table->id();
-            $table->string('Name');
-            $table->date('Date');
-            $table->string('Location');
-            $table->integer('Max_students');
-            $table->text('Description')->nullable();
+            $table->string('name');
+            $table->date('date');
+            $table->string('location');
+            $table->integer('max_students');
+            $table->text('description')->nullable();
+            $table->string('picture')->nullable();
+            $table->foreignId('organization_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
