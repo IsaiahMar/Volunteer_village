@@ -78,6 +78,9 @@ class User extends Authenticatable
             : asset('images/default.jpg');
     }
 
+    /**
+     * Get the home route based on the user's role.
+     */
     public function getHomeRoute()
     {
         switch ($this->role) {

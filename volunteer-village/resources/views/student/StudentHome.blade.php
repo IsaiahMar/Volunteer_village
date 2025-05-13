@@ -6,10 +6,11 @@
     <title>Student Home - Volunteer Village</title>
     <link rel="stylesheet" href="{{ asset('css/student.css') }}">
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="d-flex">
+    <div class="container">
         <!-- Sidebar -->
         <div class="sidebar bg-light" id="sidebar">
             <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
@@ -42,7 +43,7 @@
         </div>
 
         <!-- Main Content -->
-        <div class="content p-4">
+        <div class="content">
             <h1>Student Home</h1>
             
             <!-- Hour Counter -->
@@ -69,7 +70,7 @@
                     <div class="col-md-6 mb-4">
                         <div class="card">
                             <div class="card-body">
-                                <h3>{{ $hour->opportunity->Name ?? 'Volunteer Service' }}</h3>
+                                <h3>{{ $hour->opportunity->name ?? 'Volunteer Service' }}</h3>
                                 <p><strong>Hours:</strong> {{ $hour->hours }}</p>
                                 <p><strong>Date:</strong> {{ $hour->date }}</p>
                                 @if($hour->description)
@@ -91,6 +92,5 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="{{ asset('js/footer.js') }}"></script>
 </body>
 </html>
