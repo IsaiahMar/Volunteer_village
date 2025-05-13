@@ -101,6 +101,23 @@ Route::middleware('auth')->group(function () {
 Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin'])->name('admin.login');
     Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login.submit');
+
+
+    Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/users', [AdminController::class, 'users'])->name('admin.users');
+        Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+        Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+        Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
+        Route::resource('schools', AdminController::class)->names([
+            'index' => 'admin.schools.index',
+            'create' => 'admin.schools.create',
+            'store' => 'admin.schools.store',
+            'edit' => 'admin.schools.edit',
+            'update' => 'admin.schools.update',
+            'destroy' => 'admin.schools.destroy',
+        ]);
+
 });
 
 Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
