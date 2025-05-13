@@ -11,9 +11,6 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     */
     protected $fillable = [
         'first_name',
         'last_name',
@@ -24,7 +21,7 @@ class User extends Authenticatable
         'role',
         'student_id',
         'teacher_id',
-        'profile_photo_path', // ✅ allow profile photo uploads
+        'profile_photo_path',
     ];
 
     protected static function boot()
@@ -45,17 +42,11 @@ class User extends Authenticatable
         return $this->hasMany(VolunteerOpportunity::class, 'organization_id', 'id');
     }
 
-    /**
-     * The attributes that should be hidden for serialization.
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * The attributes that should be cast.
-     */
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -80,16 +71,12 @@ class User extends Authenticatable
         return $this->hasMany(VolunteerHour::class, 'Student_ID', 'student_id');
     }
 
-    /**
-     * Accessor to get the full profile photo URL.
-     */
     public function getProfilePhotoUrlAttribute()
     {
         return $this->profile_photo_path
             ? asset('storage/' . $this->profile_photo_path)
             : asset('images/default.jpg');
     }
-}
 
     public function getHomeRoute()
     {

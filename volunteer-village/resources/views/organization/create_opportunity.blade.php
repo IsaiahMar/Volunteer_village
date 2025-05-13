@@ -54,7 +54,7 @@
         </div>
         <div class="container mt-5" style="margin-left: 270px;">
             <h1>Create Volunteer Opportunity</h1>
-            <form action="{{ route('organization.storeOpportunity') }}" method="POST">
+            <form action="{{ route('organization.storeOpportunity') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="Name">Name</label>
@@ -76,9 +76,14 @@
                     <label for="Description">Description</label>
                     <textarea class="form-control" id="Description" name="Description" rows="3"></textarea>
                 </div>
+                <div class="form-group">
+                    <label for="picture">Opportunity Picture</label>
+                    <input type="file" class="form-control-file" id="picture" name="picture" accept="image/*">
+                    <small class="form-text text-muted">Upload an image for this opportunity (max 15MB)</small>
+                </div>
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>
     </div>
-</div>
-@endsection
+</body>
+</html>
