@@ -163,11 +163,10 @@ Route::get('/leaderboard', function () {
 
     
     // Service hours approval routes
-    Route::middleware(['auth', 'role:teacher,admin'])->group(function () {
+    Route::middleware(['auth', 'role:teacher,admin'])->prefix('student')->name('student.')->group(function () {
         Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
         Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
     });
-
 
 
 // leaderboard (moved outside student group)
