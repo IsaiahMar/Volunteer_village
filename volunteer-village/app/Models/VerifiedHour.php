@@ -22,6 +22,10 @@ class VerifiedHour extends Model
         'picture'
     ];
 
+    protected $casts = [
+        'date' => 'date'
+    ];
+
     protected static function booted()
     {
         static::updated(function ($verifiedHour) {
