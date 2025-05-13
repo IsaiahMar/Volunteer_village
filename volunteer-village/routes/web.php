@@ -118,7 +118,6 @@ Route::middleware(['web'])->group(function () {
             'update' => 'admin.schools.update',
             'destroy' => 'admin.schools.destroy',
         ]);
-    });
 });
 
 // End of admin routes
