@@ -76,8 +76,12 @@
             <h3>Role: {{ $user->role }}</h3>
 
             <!-- Profile Photo -->
-            <div class="my-4">
-                <img src="{{ $user->profile_photo_url }}" alt="Profile Photo" class="rounded-circle" style="width: 120px; height: 120px; object-fit: cover;">
+            <div class="my-4 text-center">
+                <img 
+                    src="{{ $user->profile_photo_path ? asset('storage/' . $user->profile_photo_path) : asset('images/default.jpg') }}" 
+                    alt="Profile Photo" 
+                    class="rounded-circle" 
+                    style="width: 120px; height: 120px; object-fit: cover;">
             </div>
 
             <!-- Upload Profile Photo Form -->

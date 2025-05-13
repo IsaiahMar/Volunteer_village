@@ -8,32 +8,31 @@
     <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
     <style>
         .chess-piece {
-    font-size: 1.5rem;
-    display: inline-block;
-    width: 24px;
-}
+            font-size: 1.5rem;
+            display: inline-block;
+            width: 24px;
+        }
 
-.king {
-    color: #FFD700;
-    animation: sparkle 1.2s infinite ease-in-out;
-}
-.queen {
-    color: #C0C0C0;
-}
-.rook {
-    color: #CD7F32;
-}
+        .king {
+            color: #FFD700;
+            animation: sparkle 1.2s infinite ease-in-out;
+        }
+        .queen {
+            color: #C0C0C0;
+        }
+        .rook {
+            color: #CD7F32;
+        }
 
-@keyframes sparkle {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
-
 </head>
 
 <body>
@@ -42,48 +41,21 @@
         <i class="fas fa-bars"></i>
     </button>
 
-    <div class="wrapper d-flex justify-content-center align-items-center flex-column">
+    <div class="wrapper d-flex">
         <!-- Sidebar -->
         <div class="sidebar text-center" id="sidebar">
             <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo mx-auto">
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('dashboard') }}" data-toggle="tooltip" title="Dashboard">
-                        <i class="fas fa-home"></i> <span>Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('profile.show') }}" data-toggle="tooltip" title="Profile">
-                        <i class="fas fa-user"></i> <span>Profile</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('messages.index') }}" data-toggle="tooltip" title="Messages">
-                        <i class="fas fa-envelope"></i> <span>Messages</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('opportunities.index') }}" data-toggle="tooltip" title="View Opportunities">
-                        <i class="fas fa-search"></i> <span>Opportunities</span>
-                    </a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('profile.show') }}"><i class="fas fa-user"></i> <span>Profile</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('messages.index') }}"><i class="fas fa-envelope"></i> <span>Messages</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('opportunities.index') }}"><i class="fas fa-search"></i> <span>Opportunities</span></a></li>
                 @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('organization.createOpportunity') }}" data-toggle="tooltip" title="Create Opportunities">
-                            <i class="fas fa-plus"></i> <span>Create</span>
-                        </a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('organization.createOpportunity') }}"><i class="fas fa-plus"></i> <span>Create</span></a></li>
                 @endif
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('leaderboard') }}" data-toggle="tooltip" title="Leaderboard">
-                        <i class="fas fa-trophy"></i> <span>Leaderboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="nav-link" href="{{ route('settings') }}" data-toggle="tooltip" title="Settings">
-                        <i class="fas fa-cog"></i> <span>Settings</span>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('leaderboard') }}"><i class="fas fa-trophy"></i> <span>Leaderboard</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('settings') }}"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
                 <li class="nav-item">
                     <form action="{{ route('logout') }}" method="POST">
                         @csrf
@@ -106,7 +78,6 @@
                         <th><i class="fas fa-hourglass-half text-success mr-1"></i> Total Hours</th>
                     </tr>
                 </thead>
-                           
                 <tbody>
                     @foreach($leaderboard as $index => $student)
                         <tr>
@@ -119,13 +90,12 @@
                                 @endswitch
                             </td>                            
                             <td class="d-flex align-items-center justify-content-center gap-2">
-                                <img src="{{ $student->profile_photo_url }}"
-                                     alt="{{ $student->first_name }}'s profile photo"
+                                <img src="{{ $student->profile_photo_path ? asset('storage/' . $student->profile_photo_path) : asset('images/default.jpg') }}"
+                                     alt="{{ $student->first_name }}'s photo"
                                      class="rounded-circle mr-2"
                                      style="width: 40px; height: 40px; object-fit: cover;">
                                 <span>{{ $student->first_name }} {{ $student->last_name }}</span>
-                            </td>
-                                                   
+                            </td>                         
                             <td>{{ $student->total_hours }}</td>
                         </tr>
                     @endforeach

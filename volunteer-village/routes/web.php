@@ -132,6 +132,11 @@ Route::prefix('student')->name('student.')->group(function () {
 // end of student routes
 
 // Settings routes
+
+Route::get('/test-photos', function () {
+    return \App\Models\User::select('first_name', 'profile_photo_path')->get();
+});
+
 Route::get('/settings', function () {
     return view('settings');
 })->middleware('auth')->name('settings');
