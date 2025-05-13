@@ -11,41 +11,35 @@ class OpportunityController extends Controller
     /**
      * Display a listing of all volunteer opportunities.
      *
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\View\View
      */
-    public function index(): View
-
+    public function index(Request $request): View
     {
-        // Fetch all opportunities from the database
-        $opportunities = VolunteerOpportunity::all();
+        $query = VolunteerOpportunity::query();
 
-        // Return the view with the opportunities data
-        return view('opportunities.index', compact('opportunities'));
+        // Apply filters if provided in the request
+        if ($request->filled('name')) {
+            $query->where('Name', 'LIKE', '%' . $request->name . '%');
+        }
+
+        if ($request->filled('location')) {
+            $query->where('Location', $request->location);
+        }
+
+        if ($request->filled('date_from')) {
+            $query->whereDate('Date', '>=', $request->date_from);
+        }
+
+        if ($request->filled('date_to')) {
+            $query->whereDate('Date', '<=', $request->date_to);
+        }
+
+        // Fetch filtered opportunities and distinct locations
+        $opportunities = $query->get();
+        $locations = VolunteerOpportunity::select('Location')->distinct()->pluck('Location');
+
+        // Return the view with the opportunities and locations data
+        return view('opportunities.index', compact('opportunities', 'locations'));
     }
-    public function index(Request $request)
-{
-    $query = VolunteerOpportunity::query();
-
-    if ($request->filled('name')) {
-        $query->where('Name', 'LIKE', '%' . $request->name . '%');
-    }
-
-    if ($request->filled('location')) {
-        $query->where('Location', $request->location);
-    }
-
-    if ($request->filled('date_from')) {
-        $query->whereDate('Date', '>=', $request->date_from);
-    }
-
-    if ($request->filled('date_to')) {
-        $query->whereDate('Date', '<=', $request->date_to);
-    }
-
-    $opportunities = $query->get();
-    $locations = VolunteerOpportunity::select('Location')->distinct()->pluck('Location');
-
-    return view('opportunities.index', compact('opportunities', 'locations'));
-}
-
 }

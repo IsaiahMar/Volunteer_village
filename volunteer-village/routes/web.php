@@ -110,14 +110,15 @@ Route::middleware(['web'])->group(function () {
         Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
         Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
         Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
-        Route::resource('schools', AdminController::class)->names([
-            'index' => 'admin.schools.index',
-            'create' => 'admin.schools.create',
-            'store' => 'admin.schools.store',
-            'edit' => 'admin.schools.edit',
-            'update' => 'admin.schools.update',
-            'destroy' => 'admin.schools.destroy',
-        ]);
+            Route::resource('schools', AdminController::class)->names([
+                'index' => 'admin.schools.index',
+                'create' => 'admin.schools.create',
+                'store' => 'admin.schools.store',
+                'edit' => 'admin.schools.edit',
+                'update' => 'admin.schools.update',
+                'destroy' => 'admin.schools.destroy',
+            ]);
+        });
 });
 
 // End of admin routes
@@ -163,11 +164,11 @@ Route::get('/leaderboard', function () {
 
     
     // Service hours approval routes
-    Route::middleware(['auth', 'role:teacher,admin'])->group(function () {
+    Route::middleware(['auth', 'role:teacher,admin'])->prefix('student')->name('student.')->group(function () {
         Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
         Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
     });
-});
+
 
 
 // leaderboard (moved outside student group)
