@@ -30,6 +30,9 @@
                 @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
                     <li class="nav-item"><a class="nav-link" href="{{ route('organization.createOpportunity') }}"><i class="fas fa-plus"></i> <span>Create Opportunities</span></a></li>
                 @endif
+                @if(auth()->user()->role === 'student')
+                    <li class="nav-item"><a class="nav-link" href="{{ route('student.home') }}"><i class="fas fa-home"></i> <span>Student Home</span></a></li>
+                @endif
                 <li class="nav-item"><a class="nav-link" href="{{ route('leaderboard') }}"><i class="fas fa-trophy"></i> <span>Leaderboard</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('settings') }}"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
                 <li class="nav-item">
@@ -40,7 +43,7 @@
                         </button>
                     </form>
                 </li>
-            </ul>
+
         </div>
 
         <!-- Main Content -->

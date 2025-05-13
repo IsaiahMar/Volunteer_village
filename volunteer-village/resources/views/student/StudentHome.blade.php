@@ -4,38 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Home - Volunteer Village</title>
-    <link rel="stylesheet" href="{{ asset('css/StudentHome.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/student.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/teacher.css') }}">
+
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div class="container">
         <!-- Sidebar -->
-        <div class="sidebar">
+        <div class="sidebar bg-light" id="sidebar">
             <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.home') }}">Home</a>
+                    <a class="nav-link" href="{{ route('student.home') }}"><i class="fas fa-home"></i> <span>Home</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.profile') }}">Profile</a>
+                    <a class="nav-link" href="{{ route('student.profile') }}"><i class="fas fa-user"></i> <span>Profile</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.submit.hours') }}">Submit Service Hours</a>
+                    <a class="nav-link" href="{{ route('student.submit.hours') }}"><i class="fas fa-clock"></i> <span>Submit Hours</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.your.hours') }}">Your Hours/Awards</a>
+                    <a class="nav-link" href="{{ route('student.your.hours') }}"><i class="fas fa-award"></i> <span>Your Hours</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('student.messaging') }}">Personal Messaging</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('opportunities.index') }}">Opportunity Board</a>
+                    <a class="nav-link" href="{{ route('opportunities.index') }}"><i class="fas fa-search"></i> <span>Opportunities</span></a>
                 </li>
                 <li class="nav-item">
                     <form action="{{ route('student.logout') }}" method="POST">
                         @csrf
-                        <button type="submit" class="btn btn-danger w-100">Logout</button>
+                        <button type="submit" class="nav-link btn btn-danger text-white w-100 mt-2" style="border: none; border-radius: 5px;">
+                            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                        </button>
                     </form>
                 </li>
             </ul>
