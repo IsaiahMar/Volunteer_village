@@ -93,8 +93,8 @@
                     </div>
 
                     <div class="w-1/2">
-                        <label for="dateOfBirth" class="block text-gray-700 font-medium mb-1">Date of Birth</label>
-                        <input id="dateOfBirth" name="dateOfBirth" type="date" required
+                        <label for="date_of_birth" class="block text-gray-700 font-medium mb-1">Date of Birth</label>
+                        <input id="date_of_birth" name="date_of_birth" type="date" required
                             class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-pink-400 focus:outline-none" />
                     </div>
                 </div>

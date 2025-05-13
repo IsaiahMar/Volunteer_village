@@ -8,6 +8,7 @@ use App\Models\VerifiedHour;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\VolunteerOpportunity;
+use App\Models\Message;
 
 class StudentController extends Controller
 {
@@ -20,6 +21,7 @@ class StudentController extends Controller
         $student = Auth::user();
         $verifiedHours = VerifiedHour::where('user_id', $student->id)
             ->where('status', 'verified')
+            ->with('opportunity')
             ->orderBy('date', 'desc')
             ->get();
 
@@ -112,7 +114,25 @@ class StudentController extends Controller
      */
     public function messaging(): View
     {
-        return view('student.messaging');
+        $student = Auth::user();
+        
+        // Get all conversations where the student is either sender or receiver
+        $conversations = Message::where('sender_id', $student->id)
+            ->orWhere('receiver_id', $student->id)
+            ->with(['sender', 'receiver'])
+            ->orderBy('created_at', 'desc')
+            ->get()
+            ->groupBy(function($message) use ($student) {
+                return $message->sender_id == $student->id ? $message->receiver_id : $message->sender_id;
+            })
+            ->map(function($messages) {
+                return $messages->first();
+            });
+
+        return view('student.messaging', [
+            'conversations' => $conversations,
+            'activeConversation' => null
+        ]);
     }
 
     /**

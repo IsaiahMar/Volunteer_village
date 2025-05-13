@@ -97,12 +97,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/profile/photo', [ProfileController::class, 'uploadPhoto'])->name('profile.upload-photo');
 });
 
-//  End of profile routes
-
-// Admin
-Route::middleware(['web'])->group(function () {
+// admin routes
+Route::middleware('guest')->group(function () {
     Route::get('/admin/login', [AuthenticatedSessionController::class, 'showAdminLogin'])->name('admin.login');
     Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login.submit');
+
 
     Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -164,7 +163,7 @@ Route::get('/leaderboard', function () {
 
     
     // Service hours approval routes
-    Route::middleware(['auth', 'role:teacher,admin'])->prefix('student')->name('student.')->group(function () {
+    Route::middleware(['auth', 'role:teacher,admin'])->group(function () {
         Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
         Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
     });

@@ -17,11 +17,13 @@ class OpportunityController extends Controller
     public function index(Request $request): View
     {
         $query = VolunteerOpportunity::query();
+    public function index(Request $request): View
+    {
+        $query = VolunteerOpportunity::query();
 
-        // Apply filters if provided in the request
-        if ($request->filled('name')) {
-            $query->where('Name', 'LIKE', '%' . $request->name . '%');
-        }
+    if ($request->filled('name')) {
+        $query->where('Name', 'LIKE', '%' . $request->name . '%');
+    }
 
         if ($request->filled('location')) {
             $query->where('Location', $request->location);
@@ -35,11 +37,10 @@ class OpportunityController extends Controller
             $query->whereDate('Date', '<=', $request->date_to);
         }
 
-        // Fetch filtered opportunities and distinct locations
-        $opportunities = $query->get();
-        $locations = VolunteerOpportunity::select('Location')->distinct()->pluck('Location');
+    $opportunities = $query->get();
+    $locations = VolunteerOpportunity::select('Location')->distinct()->pluck('Location');
 
-        // Return the view with the opportunities and locations data
-        return view('opportunities.index', compact('opportunities', 'locations'));
-    }
+    return view('opportunities.index', compact('opportunities', 'locations'));
+}
+
 }

@@ -41,7 +41,7 @@ class RegisteredUserController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:' . User::class],
             'phone' => ['nullable', 'string', 'max:20'],
-            'dateOfBirth' => ['nullable', 'date'],
+            'date_of_birth' => ['nullable', 'date'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required', 'string']
         ]);
@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
             'last_name' => $request->last_name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'dateOfBirth' => $request->dateOfBirth,
+            'date_of_birth' => $request->date_of_birth,
             'password' => Hash::make($request->password),
             'role' => $request->role,
         ]);
