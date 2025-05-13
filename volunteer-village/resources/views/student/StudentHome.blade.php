@@ -76,6 +76,9 @@
                                 @if($hour->description)
                                     <p><strong>Description:</strong> {{ $hour->description }}</p>
                                 @endif
+                                @if($hour->picture)
+                                    <img src="{{ asset('storage/' . $hour->picture) }}" alt="Volunteer Service Picture" class="img-fluid mt-3">
+                                @endif
                             </div>
                         </div>
                     </div>
