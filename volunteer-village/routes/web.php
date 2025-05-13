@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
 
 // Teacher
 Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
+Route::get('/student/pending-hours', [StudentController::class, 'pendingHours'])->name('student.pending.hours');
 
 // End of teacher routes
 
@@ -179,11 +180,10 @@ Route::get('/leaderboard', function () {
 
     
     // Service hours approval routes
-    Route::middleware(['role:teacher,admin'])->group(function () {
+    Route::middleware(['auth', 'role:teacher,admin'])->prefix('student')->name('student.')->group(function () {
         Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
         Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
     });
-
 
 
 // leaderboard (moved outside student group)

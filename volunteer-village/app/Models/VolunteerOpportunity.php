@@ -29,6 +29,7 @@ class VolunteerOpportunity extends Model
     public function verifiedHours()
     {
         return $this->hasMany(VerifiedHour::class, 'opportunity_id');
+    }
 
     // Define the relationship with the User model
     public function organization()
