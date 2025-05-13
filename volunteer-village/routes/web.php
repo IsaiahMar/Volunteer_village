@@ -117,7 +117,7 @@ Route::middleware('guest')->group(function () {
             'update' => 'admin.schools.update',
             'destroy' => 'admin.schools.destroy',
         ]);
-
+    });
 });
 
 Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
