@@ -110,21 +110,37 @@ Route::middleware('guest')->group(function () {
         Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
         Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('admin.users.update');
         Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('admin.users.delete');
-            Route::resource('schools', AdminController::class)->names([
-                'index' => 'admin.schools.index',
-                'create' => 'admin.schools.create',
-                'store' => 'admin.schools.store',
-                'edit' => 'admin.schools.edit',
-                'update' => 'admin.schools.update',
-                'destroy' => 'admin.schools.destroy',
-            ]);
-        });
+        Route::resource('schools', AdminController::class)->names([
+            'index' => 'admin.schools.index',
+            'create' => 'admin.schools.create',
+            'store' => 'admin.schools.store',
+            'edit' => 'admin.schools.edit',
+            'update' => 'admin.schools.update',
+            'destroy' => 'admin.schools.destroy',
+        ]);
+    });
 });
 
-// End of admin routes
+Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::get('/users', [AdminController::class, 'users'])->name('users');
+    Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
+    Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
+    Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
+    
+    // Schools routes
+    Route::resource('schools', AdminController::class)->names([
+        'index' => 'schools.index',
+        'create' => 'schools.create',
+        'store' => 'schools.store',
+        'edit' => 'schools.edit',
+        'update' => 'schools.update',
+        'destroy' => 'schools.destroy',
+    ]);
+});
 
-// Student
-Route::prefix('student')->name('student.')->group(function () {
+// Group student-specific routes
+Route::middleware(['auth'])->prefix('student')->name('student.')->group(function () {
     Route::get('/home', [StudentController::class, 'home'])->name('home');
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
     Route::post('/logout', [StudentController::class, 'logout'])->name('logout');
