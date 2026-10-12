@@ -138,7 +138,7 @@ Route::post('/toggle-darkmode', function () {
     // Service hours approval routes
     Route::middleware(['auth', 'role:teacher,admin'])->prefix('student')->name('student.')->group(function () {
         Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
-        Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
+        Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('student.update.hours.status');
     });
 
 

@@ -101,6 +101,7 @@ class StudentController extends Controller
     {
         $student = Auth::user();
         $hours = VerifiedHour::where('user_id', $student->id)
+            ->with(['opportunity.organization'])
             ->orderBy('date', 'desc')
             ->get();
             
