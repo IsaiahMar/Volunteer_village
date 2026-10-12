@@ -11,6 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // The create_volunteer_opportunities_table migration already adds this column
+        if (Schema::hasColumn('volunteer_opportunities', 'picture')) {
+            return;
+        }
+
         Schema::table('volunteer_opportunities', function (Blueprint $table) {
             $table->string('picture')->nullable()->after('Description');
         });

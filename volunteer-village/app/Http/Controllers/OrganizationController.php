@@ -98,6 +98,7 @@ class OrganizationController extends Controller
             'Max_students' => $request->Max_students,
             'Description' => $request->Description,
         ]);
+        $opportunity->organization_id = $request->user()->id;
 
         if ($request->hasFile('picture')) {
             $picture = $request->file('picture');
