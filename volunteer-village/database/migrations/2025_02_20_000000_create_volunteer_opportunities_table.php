@@ -21,7 +21,7 @@ class CreateVolunteerOpportunitiesTable extends Migration
             $table->integer('max_students');
             $table->text('description')->nullable();
             $table->string('picture')->nullable();
-            $table->foreignId('organization_id')->constrained()->onDelete('cascade');
+            $table->foreignId('organization_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

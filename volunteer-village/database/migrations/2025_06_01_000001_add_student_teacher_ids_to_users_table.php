@@ -8,6 +8,11 @@ return new class extends Migration
 {
     public function up()
     {
+        // The create_users_table migration already adds these columns
+        if (Schema::hasColumn('users', 'student_id')) {
+            return;
+        }
+
         Schema::table('users', function (Blueprint $table) {
             $table->integer('student_id')->nullable()->after('role');
             $table->integer('teacher_id')->nullable()->after('student_id');

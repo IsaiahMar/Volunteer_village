@@ -11,6 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Duplicate of 2025_02_21_151936_create_verified_hours_table; skip if it already ran
+        if (Schema::hasTable('verified_hours')) {
+            return;
+        }
+
         Schema::create('verified_hours', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
