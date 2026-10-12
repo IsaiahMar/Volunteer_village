@@ -43,7 +43,8 @@ class RegisteredUserController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
             'date_of_birth' => ['nullable', 'date'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string']
+            // Never allow self-registration as admin
+            'role' => ['required', 'string', 'in:student,teacher,organization']
         ]);
 
         $user = User::create([

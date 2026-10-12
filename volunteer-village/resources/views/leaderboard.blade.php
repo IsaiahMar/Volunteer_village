@@ -10,30 +10,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         .chess-piece {
-    font-size: 1.5rem;
-    display: inline-block;
-    width: 24px;
-}
+            font-size: 1.5rem;
+            display: inline-block;
+            width: 24px;
+        }
 
-.king {
-    color: #FFD700;
-    animation: sparkle 1.2s infinite ease-in-out;
-}
-.queen {
-    color: #C0C0C0;
-}
-.rook {
-    color: #CD7F32;
-}
+        .king {
+            color: #FFD700;
+            animation: sparkle 1.2s infinite ease-in-out;
+        }
+        .queen {
+            color: #C0C0C0;
+        }
+        .rook {
+            color: #CD7F32;
+        }
 
-@keyframes sparkle {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.2); opacity: 0.7; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
+        @keyframes sparkle {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.2); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
     </style>
-
 </head>
 
 <body>

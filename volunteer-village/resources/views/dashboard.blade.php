@@ -23,12 +23,18 @@
             <img src="{{ asset('images/Logo.png') }}" alt="App Logo" class="logo">
             <h2>Volunteer Tracker</h2>
             <ul class="nav flex-column">
-                <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-home"></i> <span>Dashboard</span></a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                @if(auth()->user()->role === 'teacher')
+                    <li class="nav-item"><a class="nav-link" href="{{ route('teacher.home') }}"><i class="fas fa-home"></i> <span>Teacher Home</span></a></li>
+                @endif
                 <li class="nav-item"><a class="nav-link" href="{{ route('profile.show') }}"><i class="fas fa-user"></i> <span>Profile</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('messages.index') }}"><i class="fas fa-envelope"></i> <span>Messages</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('opportunities.index') }}"><i class="fas fa-search"></i> <span>View Opportunities</span></a></li>
                 @if(auth()->user()->role === 'organization' || auth()->user()->role === 'teacher' || auth()->user()->role === 'admin')
                     <li class="nav-item"><a class="nav-link" href="{{ route('organization.createOpportunity') }}"><i class="fas fa-plus"></i> <span>Create Opportunities</span></a></li>
+                @endif
+                @if(auth()->user()->role === 'student')
+                    <li class="nav-item"><a class="nav-link" href="{{ route('student.home') }}"><i class="fas fa-home"></i> <span>Student Home</span></a></li>
                 @endif
                 <li class="nav-item"><a class="nav-link" href="{{ route('leaderboard') }}"><i class="fas fa-trophy"></i> <span>Leaderboard</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="{{ route('settings') }}"><i class="fas fa-cog"></i> <span>Settings</span></a></li>

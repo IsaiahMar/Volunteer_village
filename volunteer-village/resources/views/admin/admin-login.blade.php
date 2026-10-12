@@ -17,7 +17,7 @@
         </div>
         <!-- Right: Login Form -->
         <div class="w-1/2 p-10 flex flex-col justify-center">
-            <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">USER LOGIN</h2>
+            <h2 class="text-2xl font-semibold text-center text-gray-800 mb-6">ADMIN LOGIN</h2>
             <form class="space-y-6" method="POST" action="{{ route('admin.login.submit') }}">
                 @csrf
                 <!-- Email -->
@@ -25,7 +25,7 @@
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-indigo-400">
                         <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 12A4 4 0 1 1 8 12a4 4 0 0 1 8 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 14v7m0 0H9m3 0h3"/></svg>
                     </span>
-                    <input id="email" name="email" type="email" required placeholder="Email address"
+                    <input id="email" name="email" type="email" required placeholder="Enter your email address"
                         class="pl-10 pr-4 py-3 w-full rounded-full border border-gray-300 focus:ring-2 focus:ring-indigo-400 focus:border-indigo-400 text-gray-700 bg-white shadow-sm @error('email') border-red-500 @enderror"
                         value="{{ old('email') }}">
                     @error('email')

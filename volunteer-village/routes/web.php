@@ -24,8 +24,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('schools', SchoolController::class);
     Route::post('/schools/{school}/approve', [SchoolController::class, 'approve'])
-        ->name('schools.approve')
-        ->middleware('can:approve,school');
+        ->name('schools.approve');
 });
 
 
@@ -45,24 +44,18 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Organization
-Route::get('/organization/home', [OrganizationController::class, 'index'])->name('organization.home');
+Route::get('/organization/home', [OrganizationController::class, 'index'])->middleware('auth')->name('organization.home');
 
 Route::middleware(['auth', 'role:organization'])->prefix('organization')->name('organization.')->group(function () {
     Route::get('/opportunities', [OrganizationOpportunityController::class, 'index'])->name('opportunities.index');
     Route::put('/opportunities/{id}', [OrganizationOpportunityController::class, 'update'])->name('opportunities.update');
     Route::delete('/opportunities/{id}', [OrganizationOpportunityController::class, 'destroy'])->name('opportunities.destroy');
-    Route::get('/opportunities/create', [OrganizationOpportunityController::class, 'create'])->name('createOpportunity');
-    Route::post('/opportunities', [OrganizationOpportunityController::class, 'store'])->name('storeOpportunity');
-});
-
-// Authenticated Organization
-Route::middleware('auth')->group(function () {
-    Route::get('/organization/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('organization.createOpportunity');
-    Route::post('/organization/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('organization.storeOpportunity');
+    Route::get('/opportunities/create', [OrganizationController::class, 'createOpportunity'])->name('createOpportunity');
+    Route::post('/opportunities', [OrganizationController::class, 'storeOpportunity'])->name('storeOpportunity');
 });
 
 // Teacher
-Route::get('/teacher/home', [TeacherController::class, 'index'])->name('teacher.home');
+Route::get('/teacher/home', [TeacherController::class, 'index'])->middleware(['auth', 'role:teacher,admin'])->name('teacher.home');
 
 // End of teacher routes
 
@@ -89,8 +82,8 @@ Route::post('register', [RegisteredUserController::class, 'store']);
 // End of auth routes
 
 // Profile
-Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
 Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -103,22 +96,15 @@ Route::middleware('guest')->group(function () {
     Route::post('/admin/login', [AuthenticatedSessionController::class, 'adminLogin'])->name('admin.login.submit');
 });
 
-Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::get('/users', [AdminController::class, 'users'])->name('users');
     Route::get('/users/{user}/edit', [AdminController::class, 'editUser'])->name('users.edit');
     Route::put('/users/{user}', [AdminController::class, 'updateUser'])->name('users.update');
     Route::delete('/users/{user}', [AdminController::class, 'deleteUser'])->name('users.delete');
     
-    // Schools routes
-    Route::resource('schools', AdminController::class)->names([
-        'index' => 'schools.index',
-        'create' => 'schools.create',
-        'store' => 'schools.store',
-        'edit' => 'schools.edit',
-        'update' => 'schools.update',
-        'destroy' => 'schools.destroy',
-    ]);
+    // Schools routes (AdminController has no show method)
+    Route::resource('schools', AdminController::class)->except(['show']);
 });
 
 // Group student-specific routes
@@ -149,24 +135,11 @@ Route::post('/toggle-darkmode', function () {
 
 // End of settings routes
 
-// Leaderboard (uses Eloquent)
-Route::get('/leaderboard', function () {
-    $leaderboard = User::join('leaderboard', 'users.id', '=', 'leaderboard.student_id')
-        ->select('users.*', 'leaderboard.total_hours')
-        ->orderByDesc('leaderboard.total_hours')
-        ->limit(10)
-        ->get();
-
-    return view('leaderboard', compact('leaderboard'));
-})->middleware('auth')->name('leaderboard');
-
-    
     // Service hours approval routes
-    Route::middleware(['role:teacher,admin'])->group(function () {
+    Route::middleware(['auth', 'role:teacher,admin'])->prefix('student')->name('student.')->group(function () {
         Route::get('/pending-hours', [StudentController::class, 'pendingHours'])->name('pending.hours');
-        Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('update.hours.status');
+        Route::post('/hours/{id}/status', [StudentController::class, 'updateHoursStatus'])->name('student.update.hours.status');
     });
-
 
 
 // leaderboard (moved outside student group)

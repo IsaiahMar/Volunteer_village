@@ -25,7 +25,7 @@ class OrganizationOpportunityController extends Controller
 
     public function update(Request $request, $id)
     {
-        $request->validate([
+        $validated = $request->validate([
             'Name' => 'required|string|max:255',
             'Date' => 'required|date',
             'Location' => 'required|string|max:255',
@@ -37,7 +37,7 @@ class OrganizationOpportunityController extends Controller
             ->where('organization_id', auth()->id())
             ->firstOrFail();
 
-        $opportunity->update($request->all());
+        $opportunity->update($validated);
 
         return redirect()->route('organization.opportunities.index')->with('success', 'Opportunity updated successfully.');
     }

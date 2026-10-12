@@ -11,8 +11,7 @@ class SchoolController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('admin')->only(['create', 'store', 'approve']);
-        $this->middleware('can:approve,school')->only(['approve']);
+        $this->middleware('admin')->only(['create', 'store', 'approve', 'edit', 'update', 'destroy']);
     }
 
     public function index()
